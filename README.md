@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+# Sistema de Votação para Representantes de Turma e Projetos Acadêmicos
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este repositório contém o desenvolvimento do Front-End do Sistema de Votação para Representantes de Turma e Projetos Acadêmicos da Fatec-SP. O sistema visa facilitar o processo de votação tanto para os alunos da unidade quanto para os visitantes, com funcionalidades específicas para cada perfil de usuário.
 
-## Available Scripts
 
-In the project directory, you can run:
+
+## Estrutura do Sistema
+
+O sistema será dividido em dois perfis principais:
+
+1. Administrador
+A visão do administrador será voltada para dashboards interativos e estatísticas detalhadas sobre o andamento da votação. O administrador terá a capacidade de gerenciar as votações, acompanhar resultados em tempo real e gerar relatórios.
+
+2. Usuário
+Os usuários são divididos em duas categorias, com funcionalidades específicas:
+
+- Aluno da Unidade: O aluno da Fatec-SP terá a função de votar para escolher os representantes de turma. Ele terá acesso a uma interface de votação simples e objetiva.
+
+- Visitante: O usuário visitante terá a função de votar nos melhores projetos apresentados nas feiras de projetos promovidas pela unidade. A votação será realizada de maneira intuitiva, permitindo ao visitante escolher os projetos que considera mais inovadores e interessantes.
+
+
+## Fluxo de Navegação
+
+### Administrador
+1. O administrador acessa o Dashboard do sistema.
+
+2. O administrador escolhe entre Votação Interna ou Votação Externa.
+
+3. Dentro de cada seção, o administrador pode:
+
+- Visualizar cards com estatísticas resumidas de cada votação.
+
+- Ao clicar em um card, o administrador acessa a tela detalhada, com gráficos e rankings dos candidatos ou projetos.
+
+4. O administrador pode acessar o Histórico de Votações para consultar os registros de votos realizados, incluindo detalhes sobre quem votou e em quem.
+
+### Usuário (Aluno ou Visitante)
+
+1. O usuário faz o login no sistema.
+
+2. Se o usuário for aluno, ele escolhe entre Votação Interna ou Votação Externa:
+
+3. Caso escolha Votação Interna, o aluno visualiza os candidatos de sua sala e realiza seu voto.
+
+4. Caso escolha Votação Externa, o aluno visualiza os projetos e pode votar neles, ou optar por não votar.
+
+5. Se o usuário for visitante, ele é redirecionado diretamente para a Votação Externa, onde pode visualizar os projetos e votar neles.
+
+
+## Tecnologias Utilizadas Para o Front-End
+
+- React: Para o desenvolvimento da interface de usuário.
+
+- HTML5 e CSS3: Para a estruturação e estilização do layout.
+
+
+## Para Iniciar o Projeto
+
+No diretório do projeto, você pode rodar:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Roda o app no modo de desenvolvimento.\
+Abra [http://localhost:3000](http://localhost:3000) para visualizá-lo no seu navegador.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+A página será recarregada sempre que você fizer alterações.\
+Você também poderá ver quaisquer erros de lint no console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Lança o runner de testes no modo interativo de observação.\
+Veja a seção sobre [running tests](https://facebook.github.io/create-react-app/docs/running-tests) para mais informações.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Cria o app para produção na pasta `build`.\
+Ele empacota o React corretamente no modo de produção e otimiza a construção para melhor desempenho.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+A construção é minificada e os nomes dos arquivos incluem os hashes.\
+Seu app está pronto para ser implantado!
+Veja a seção sobre [deployment](https://facebook.github.io/create-react-app/docs/deployment) para mais informações.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
