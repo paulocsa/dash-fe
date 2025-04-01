@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url('/src/assets/font/RobotoSlab-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+.dashContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 60px;
+    font-family: 'Roboto Slab', sans-serif; 
+}
+
+.dashHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.votacaoText {
+    color: #1A6C7C;
+    font-size: 24px;
+    text-shadow: rgba(0, 0, 0, 0.1x) 1px 1px 3px; 
+    font-family: 'Roboto Slab', sans-serif;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.cursoSelector {
+    width: 200px;
+    height: 50%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
