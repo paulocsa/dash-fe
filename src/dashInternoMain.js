@@ -5,6 +5,7 @@ import { useState } from "react";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import ChartSemanal from "./components/ChartSemanal";
+import ChartBar from "./components/ChartBar";
 
 const curso = [
   {
@@ -49,7 +50,9 @@ export default function DashInternoMain() {
         <div className={styles.chartContainer}>
           <ChartSemanal />
         </div>
-        <div className={styles.chartContainer}></div>
+        <div className={styles.chartContainer}>
+          <ChartBar/>
+        </div>
       </div>
     </div>
   );
