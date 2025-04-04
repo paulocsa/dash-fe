@@ -18,6 +18,7 @@
 .card:hover {
     transform: scale(1.01);
     transition: transform 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 .cardHeader {
@@ -53,6 +54,7 @@
     width: 100px;
     height: 100px;
     position: relative;
+    cursor: pointer;
 }
 
 .positionBadge {

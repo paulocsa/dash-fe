@@ -139,6 +139,9 @@ const VtInternaCards = () => {
                       width={150}
                       height={100}
                       margin={{ top: 0, right: 25, bottom: 10, left: 0 }}
+                      style={{
+                        cursor: "pointer",
+                      }}
                     >
                       <Pie
                         data={[
