@@ -1,7 +1,9 @@
 import React from "react";
+import { useContext } from "react";
 import { Carousel } from "primereact/carousel";
 import { PieChart, Pie, Cell } from "recharts";
 import styles from "./VtInternaCards.module.css";
+import { TurmaContext } from "../../context/TurmaContext";
 
 const COLORS = ["#ff0000", "#000000"];
 
@@ -69,33 +71,41 @@ const responsiveOptions = [
   },
 ];
 
-const getSeverity = (product) => {
-  switch (product.inventoryStatus) {
-    case "INSTOCK":
-      return "success";
-
-    case "LOWSTOCK":
-      return "warning";
-
-    case "OUTOFSTOCK":
-      return "danger";
-
-    default:
-      return null;
-  }
-};
-
 const VtInternaCards = () => {
-  const data = [
-    { name: "DSM 1", votos: 78, feedback: { otimo: 40, bom: 60 } },
-    { name: "DSM 2", votos: 65, feedback: { otimo: 50, bom: 50 } },
-    { name: "DSM 3", votos: 43, feedback: { otimo: 30, bom: 70 } },
-    { name: "DSM 4", votos: 31, feedback: { otimo: 20, bom: 80 } },
-    { name: "DSM 5", votos: 50, feedback: { otimo: 60, bom: 40 } },
-    { name: "DSM 6", votos: 45, feedback: { otimo: 55, bom: 45 } },
-  ];
+  
+  const { turmaData, selectedCurso } = useContext(TurmaContext);
 
-  const sortedData = [...data].sort((a, b) => b.votos - a.votos);
+  const getSortedData = () => {
+    if (selectedCurso === "todos") {
+      const allTurmas = [];
+      
+      if (turmaData.dsm) {
+        turmaData.dsm.forEach(turma => {
+          allTurmas.push({
+            ...turma,
+            curso: "DSM"
+          });
+        });
+      }
+      
+      if (turmaData.gestao) {
+        turmaData.gestao.forEach(turma => {
+          allTurmas.push({
+            ...turma,
+            curso: "GE"
+          });
+        });
+      }
+      
+      return allTurmas.sort((a, b) => b.votos - a.votos);
+    } else if (selectedCurso && turmaData[selectedCurso]) {
+      return [...turmaData[selectedCurso]].sort((a, b) => b.votos - a.votos);
+    }
+    
+    return [];
+  };
+
+  const sortedData = getSortedData();
 
   return (
     <div className={styles.cardContainer}>
@@ -115,6 +125,9 @@ const VtInternaCards = () => {
                 <div className={styles.cardHeader}>
                   <div className={styles.positionBadge}>{sortedIndex}°</div>{" "}
                   <span className={styles.classID}>{item.name}</span>
+                  {selectedCurso === "todos" && (
+                    <span className={styles.cursoBadge}>{item.curso}</span>
+                  )}
                 </div>
                 <div className={styles.cardInnerContent}>
                   <div className={styles.votacaoInfoText}>

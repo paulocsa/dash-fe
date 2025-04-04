@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import React from "react";
 import {
     BarChart,
@@ -8,19 +9,47 @@ import {
     Legend,
     ResponsiveContainer,
 } from "recharts";
-
-const data = [
-    { name: "DSM 1", votos: 78, feedback: { otimo: 40, bom: 60 } },
-    { name: "DSM 2", votos: 65, feedback: { otimo: 50, bom: 50 } },
-    { name: "DSM 3", votos: 43, feedback: { otimo: 30, bom: 70 } },
-    { name: "DSM 4", votos: 31, feedback: { otimo: 20, bom: 80 } },
-    { name: "DSM 5", votos: 50, feedback: { otimo: 60, bom: 40 } },
-    { name: "DSM 6", votos: 45, feedback: { otimo: 55, bom: 45 } },
-];
+import { TurmaContext } from "../../context/TurmaContext"
+import styles from "../ChartSemanal/ChartSemanal.module.css"
 
 const ChartBar = () => {
+    const { turmaData, selectedCurso } = useContext(TurmaContext);
+    
+    const getData = () => {
+        if (selectedCurso === "todos") {
+            const allTurmas = [];
+            
+            if (turmaData.dsm) {
+                turmaData.dsm.forEach(turma => {
+                    allTurmas.push({
+                        ...turma,
+                        curso: "DSM"
+                    });
+                });
+            }
+            
+            if (turmaData.gestao) {
+                turmaData.gestao.forEach(turma => {
+                    allTurmas.push({
+                        ...turma,
+                        curso: "GE"
+                    });
+                });
+            }
+            
+            return allTurmas;
+        } else if (selectedCurso && turmaData[selectedCurso]) {
+            return turmaData[selectedCurso];
+        }
+        
+        return [];
+    };
+
+    const data = getData();
+
     return (
         <ResponsiveContainer width="100%" height="100%">
+            <span className={styles.title}>Total de Votos</span>
             <BarChart
                 data={data}
                 margin={{ top: 15, right: 25, left: -15, bottom: 5 }}
@@ -32,7 +61,7 @@ const ChartBar = () => {
                     tickLine={false}
                 />
                 <YAxis
-                    domain={[0, Math.max(...data.map((item) => item.votos)) + 10]}
+                    domain={[0, data.length > 0 ? Math.max(...data.map((item) => item.votos)) + 10 : 100]}
                     tickFormatter={(value) => `${value}`}
                     style={{ fontSize: "12px" }}
                     axisLine={false}

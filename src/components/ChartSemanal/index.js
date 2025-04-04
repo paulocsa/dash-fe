@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
-    LineChart,
-    AreaChart,
     Line,
     Area,
     XAxis,
@@ -11,53 +9,54 @@ import {
     ResponsiveContainer,
     ComposedChart,
 } from "recharts";
-import { format, parseISO } from "date-fns";
-import { ptBR } from "date-fns/locale";
-
-const data = {
-    week1: [
-        { day: "2024-04-01", percentage: 20 },
-        { day: "2024-04-02", percentage: 25 },
-        { day: "2024-04-03", percentage: 15 },
-        { day: "2024-04-04", percentage: 10 },
-        { day: "2024-04-05", percentage: 30 },
-        { day: "2024-04-06", percentage: 50 },
-        { day: "2024-04-07", percentage: 40 },
-    ],
-    week2: [
-        { day: "2024-04-08", percentage: 40 },
-        { day: "2024-04-09", percentage: 55 },
-        { day: "2024-04-10", percentage: 5 },
-        { day: "2024-04-11", percentage: 60 },
-        { day: "2024-04-12", percentage: 35 },
-        { day: "2024-04-13", percentage: 45 },
-        { day: "2024-04-14", percentage: 25 },
-    ],
-};
+import { TurmaContext } from "../../context/TurmaContext";
+import styles from "./ChartSemanal.module.css";
 
 const daysOfWeek = ["seg.", "ter.", "qua.", "qui.", "sex.", "sáb.", "dom."];
 
-const formatDay = (isoDate) => {
-    return format(parseISO(isoDate), "eee", { locale: ptBR });
-};
-
 const ChartSemanal = () => {
-    const combinedData = daysOfWeek.map((day, index) => {
-        const week1Data = data.week1[index];
-        const week2Data = data.week2[index];
+    const { dataweek, selectedCurso } = useContext(TurmaContext);
 
-        return {
-            day,
-            week1: week1Data ? week1Data.percentage : null,
-            week2: week2Data ? week2Data.percentage : null,
-        };
-    });
+    const getData = () => {
+        if (selectedCurso === "todos") {
+            return daysOfWeek.map((day, index) => {
+                const dsmWeek1Data = dataweek.dsm?.week1[index];
+                const dsmWeek2Data = dataweek.dsm?.week2[index];
+                const gestaoWeek1Data = dataweek.gestao?.week1[index];
+                const gestaoWeek2Data = dataweek.gestao?.week2[index];
+
+                return {
+                    day,
+                    week1: (dsmWeek1Data?.visitantes || 0) + (gestaoWeek1Data?.visitantes || 0),
+                    week2: (dsmWeek2Data?.visitantes || 0) + (gestaoWeek2Data?.visitantes || 0),
+                };
+            });
+        } else {
+            const cursoData = selectedCurso && dataweek[selectedCurso] 
+                ? dataweek[selectedCurso] 
+                : { week1: [], week2: [] };
+
+            return daysOfWeek.map((day, index) => {
+                const week1Data = cursoData.week1[index];
+                const week2Data = cursoData.week2[index];
+
+                return {
+                    day,
+                    week1: week1Data ? week1Data.visitantes : 0,
+                    week2: week2Data ? week2Data.visitantes : 0,
+                };
+            });
+        }
+    };
+
+    const data = getData();
 
     return (
         <ResponsiveContainer width="100%" height="100%">
+            <span className={styles.title}>Visitantes por Semana</span>
             <ComposedChart
-                data={combinedData}
-                title="Votos por Semana"
+                data={data}
+                title="Visitantes por Semana"
                 margin={{ top: 15, right: 25, left: -15, bottom: 5 }}
             >
                 <defs>
@@ -73,13 +72,11 @@ const ChartSemanal = () => {
                     tickLine={false}
                 />
                 <YAxis
-                    domain={[0, 100]}
-                    tickFormatter={(value) => `${value}%`}
                     style={{ fontSize: "12px" }}
                     axisLine={false}
                     tickLine={false}
                 />
-                <Tooltip formatter={(value) => `${value}%`} />
+                <Tooltip />
                 <Legend
                     wrapperStyle={{
                         fontSize: "12px",
@@ -88,7 +85,7 @@ const ChartSemanal = () => {
                         lineHeight: "15px",
                     }}
                     iconType="circle"
-                    iconSize={10} 
+                    iconSize={10}
                 />
                 <Area
                     type="monotone"

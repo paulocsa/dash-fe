@@ -1,28 +1,15 @@
+import { useContext } from "react";
 import VtInternaCards from "./components/VtInternaCards";
 import styles from "./DashInternoMain.module.css";
 import { Dropdown } from "primereact/dropdown";
-import { useState } from "react";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import ChartSemanal from "./components/ChartSemanal";
 import ChartBar from "./components/ChartBar";
-
-const curso = [
-  {
-    name: "DSM",
-    value: "dsm",
-  },
-  {
-    name: "Gestão Empresarial",
-    value: "gestao",
-  },
-];
-
-const votacaoType = [{name: "Votação Interna", value: 0}, {name: "Votação Externa", value: 1}];
+import { TurmaContext } from "./context/TurmaContext";
 
 export default function DashInternoMain() {
-  const [selectedCurso, setSelectedCurso] = useState(null);
-  const [selectedVotacaoType, setSelectedVotacaoType] = useState(0); //0 é interna
+  const { selectedCurso, selectedVotacaoType, curso, votacaoType, setSelectedCurso, setSelectedVotacaoType } = useContext(TurmaContext);
   return (
     <div className={styles.dashContainer}>
       <div className={styles.dashHeader}>
