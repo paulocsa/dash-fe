@@ -1,0 +1,98 @@
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 4px;
+    height: fit-content;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.card {
+    height: fit-content;
+    border-radius: 8px;
+    max-width: 95%;
+}
+
+.card:hover {
+    transform: scale(1.01);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.cardHeader {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.cardContent {
+    height: fit-content;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.cardInnerContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.totalVotes {
+    font-size: clamp(16px, 3vw, 30px);
+    font-weight: bold;
+    color: #000;
+    margin: 0px;
+}
+
+.pieChartContainer {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    cursor: pointer;
+}
+
+.positionBadge {
+    top: -10px;
+    left: -10px;
+    background-color: #AD0101;
+    color: white;
+    font-size: 16 px;
+    font-weight: bold;
+    border-radius: 7px;
+    width: 35px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.chartHeader {
+    display: flex;
+    font-size: 24px;
+    font-weight: bold;
+    color: #d32f2f;
+}
+
+.votosText{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.votacaoInfoText{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.classID{
+    text-align: center;
+    width: 100%;
+}
