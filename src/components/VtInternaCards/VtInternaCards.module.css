@@ -21,6 +21,7 @@
     cursor: pointer;
 }
 
+
 .cardHeader {
     display: flex;
     width: 100%;
@@ -95,4 +96,26 @@
 .classID{
     text-align: center;
     width: 100%;
+}
+
+
+.selected {
+    position: relative;
+}
+
+.selected::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    background-color: red;
+    border-radius: 0 0 8px 8px;
+    transition: height 0.3s ease, background-color 0.3s ease; /* Transição suave */
+}
+
+
+.selected::after {
+    transition: all 0.3s ease-in-out;
 }

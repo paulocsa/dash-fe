@@ -1,5 +1,4 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Carousel } from "primereact/carousel";
 import { PieChart, Pie, Cell } from "recharts";
 import styles from "./VtInternaCards.module.css";
@@ -49,59 +48,37 @@ const renderCustomLabel = ({
 };
 
 const responsiveOptions = [
-  {
-    breakpoint: "1400px",
-    numVisible: 4,
-    numScroll: 1,
-  },
-  {
-    breakpoint: "1199px",
-    numVisible: 3,
-    numScroll: 1,
-  },
-  {
-    breakpoint: "767px",
-    numVisible: 2,
-    numScroll: 1,
-  },
-  {
-    breakpoint: "575px",
-    numVisible: 1,
-    numScroll: 1,
-  },
+  { breakpoint: "1400px", numVisible: 4, numScroll: 1 },
+  { breakpoint: "1199px", numVisible: 3, numScroll: 1 },
+  { breakpoint: "767px", numVisible: 2, numScroll: 1 },
+  { breakpoint: "575px", numVisible: 1, numScroll: 1 },
 ];
 
 const VtInternaCards = () => {
-  
   const { turmaData, selectedCurso } = useContext(TurmaContext);
+  const [selectedCardId, setSelectedCardId] = useState(null); // 👈 Estado de seleção
 
   const getSortedData = () => {
     if (selectedCurso === "todos") {
       const allTurmas = [];
-      
+
       if (turmaData.dsm) {
-        turmaData.dsm.forEach(turma => {
-          allTurmas.push({
-            ...turma,
-            curso: "DSM"
-          });
+        turmaData.dsm.forEach((turma) => {
+          allTurmas.push({ ...turma, curso: "DSM" });
         });
       }
-      
+
       if (turmaData.gestao) {
-        turmaData.gestao.forEach(turma => {
-          allTurmas.push({
-            ...turma,
-            curso: "GE"
-          });
+        turmaData.gestao.forEach((turma) => {
+          allTurmas.push({ ...turma, curso: "GE" });
         });
       }
-      
+
       return allTurmas.sort((a, b) => b.votos - a.votos);
     } else if (selectedCurso && turmaData[selectedCurso]) {
       return [...turmaData[selectedCurso]].sort((a, b) => b.votos - a.votos);
     }
-    
+
     return [];
   };
 
@@ -115,15 +92,16 @@ const VtInternaCards = () => {
         responsiveOptions={responsiveOptions}
         itemTemplate={(item, index) => {
           const sortedIndex =
-            sortedData.findIndex(
-              (sortedItem) => sortedItem.name === item.name
-            ) + 1;
+            sortedData.findIndex((sortedItem) => sortedItem.name === item.name) + 1;
 
           return (
-            <div className={styles.card}>
+            <div
+              className={`${styles.card} ${selectedCardId === item.name ? styles.selected : ""}`}
+              onClick={() => setSelectedCardId(item.name)}
+            >
               <div className={styles.cardContent}>
                 <div className={styles.cardHeader}>
-                  <div className={styles.positionBadge}>{sortedIndex}°</div>{" "}
+                  <div className={styles.positionBadge}>{sortedIndex}°</div>
                   <span className={styles.classID}>{item.name}</span>
                   {selectedCurso === "todos" && (
                     <span className={styles.cursoBadge}>{item.curso}</span>
@@ -139,9 +117,7 @@ const VtInternaCards = () => {
                       width={150}
                       height={100}
                       margin={{ top: 0, right: 25, bottom: 10, left: 0 }}
-                      style={{
-                        cursor: "pointer",
-                      }}
+                      style={{ cursor: "pointer" }}
                     >
                       <Pie
                         data={[
