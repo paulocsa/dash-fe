@@ -56,7 +56,7 @@ const ChartSemanal = () => {
             <span className={styles.title}>Visitantes por Semana</span>
             <ComposedChart
                 data={data}
-                title="Visitantes por Semana"
+                title="Votos por Semana"
                 margin={{ top: 15, right: 25, left: -15, bottom: 5 }}
             >
                 <defs>

@@ -5,7 +5,7 @@ import { Dropdown } from "primereact/dropdown";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import ChartSemanal from "./components/ChartSemanal";
-import ChartBar from "./components/ChartBar";
+import ChartPie from "./components/ChartPie";
 import { TurmaContext } from "./context/TurmaContext";
 
 export default function DashInternoMain() {
@@ -38,7 +38,7 @@ export default function DashInternoMain() {
           <ChartSemanal />
         </div>
         <div className={styles.chartContainer}>
-          <ChartBar/>
+          <ChartPie/>
         </div>
       </div>
     </div>

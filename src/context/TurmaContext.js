@@ -4,20 +4,10 @@ export const TurmaContext = createContext();
 
 const turmaData = {
     "dsm": [
-        { name: "DSM 1", votos: 60, feedback: { otimo: 25, bom: 45 } },
-        { name: "DSM 2", votos: 30, feedback: { otimo: 15, bom: 15 } },
-        { name: "DSM 3", votos: 20, feedback: { otimo: 18, bom: 2 } },
-        { name: "DSM 4", votos: 70, feedback: { otimo: 35, bom: 35 } },
-        { name: "DSM 5", votos: 80, feedback: { otimo: 60, bom: 20 } },
-        { name: "DSM 6", votos: 40, feedback: { otimo: 20, bom: 20 } }
+        { totalAlunos: 20, votosValidos: 15, candidatosAtivos: 15 }
     ],
     "gestao": [
-        { name: "GE 1", votos: 100, feedback: { otimo: 40, bom: 60 } },
-        { name: "GE 2", votos: 80, feedback: { otimo: 35, bom: 45 } },
-        { name: "GE 3", votos: 43, feedback: { otimo: 30, bom: 13 } },
-        { name: "GE 4", votos: 30, feedback: { otimo: 20, bom: 10 } },
-        { name: "GE 5", votos: 20, feedback: { otimo: 10, bom: 10 } },
-        { name: "GE 6", votos: 90, feedback: { otimo: 45, bom: 45 } }
+        { totalAlunos: 50, votosValidos: 30, candidatosAtivos: 10 }
     ]
 };
 
@@ -30,7 +20,7 @@ const curso = [
         name: "Gestão Empresarial",
         value: "gestao",
     },
-    {name: "Todos", value: "todos"}
+    { name: "Todos", value: "todos" }
 ];
 
 const votacaoType = [
