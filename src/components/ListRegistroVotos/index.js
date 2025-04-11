@@ -34,8 +34,11 @@ function RegistroVotos() {
   const itensPorPagina = 4;
 
   const totalPaginas = Math.ceil(dados.length / itensPorPagina);
-
   const paginas = Array.from({ length: totalPaginas }, (_, index) => index + 1);
+  const inicio = (paginaAtual - 1) * itensPorPagina;
+  const fim = inicio + itensPorPagina;
+  const dadosPagina = dados.slice(inicio, fim);
+  const totalRegistros = itensPorPagina * totalPaginas;
 
   const marcaPagina = (index) => {
     if (index == paginaAtual){
@@ -44,10 +47,6 @@ function RegistroVotos() {
       return styles.nada
     }
   }
-
-  const inicio = (paginaAtual - 1) * itensPorPagina;
-  const fim = inicio + itensPorPagina;
-  const dadosPagina = dados.slice(inicio, fim);
 
   const irParaAnterior = () => {
     if (paginaAtual > 1) setPaginaAtual(paginaAtual - 1);
@@ -68,12 +67,12 @@ function RegistroVotos() {
   return (
     <div className={styles.container}>
       <div className={styles. containerLista}>
-      <h2 className={styles.title}>Registro de Votos</h2>
+      <h2 className={styles.tabelaTitulo}>Registro de Votos</h2>
       <div>
         <div>
           <table className={styles.tabela}>
             <thead>
-              <tr className={styles.tableTitle}>
+              <tr className={styles.tabelaSubTitulo}>
                 <th>Aluno</th>
                 <th>Atividade</th>
                 <th>Data</th>
@@ -90,14 +89,18 @@ function RegistroVotos() {
             </tbody>
           </table>
           <div className={styles.containerPaginacao}>
+            <div>Total de {totalRegistros} registros</div>
             <div className={styles.paginacao}>
+              <div className={styles.containerSeta}>
               {paginaAtual > 1 && (
                 <IoChevronBackOutline
-                  size={30}
+                  size={24}
                   onClick={irParaAnterior}
                   style={{ cursor: "pointer" }}
                 />
               )}
+              </div>
+              <div className={styles.containerNumeros}>
               {paginas
                 .filter(
                   (pagina) =>
@@ -110,13 +113,16 @@ function RegistroVotos() {
                     {pagina}
                   </span>
               ))}
+              </div>
+              <div className={styles.containerSeta}>
               {paginaAtual < totalPaginas && (
                 <IoChevronForward
-                  size={30}
+                  size={24}
                   onClick={irParaProxima}
                   style={{ cursor: "pointer" }}
                 />
               )}
+              </div>
             </div>
           </div>
       </div>
