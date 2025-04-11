@@ -53,10 +53,10 @@ const ChartSemanal = () => {
 
     return (
         <ResponsiveContainer width="100%" height="100%">
-            <span className={styles.title}>Visitantes por Semana</span>
+            <span className={styles.title}>Votos por Semana</span>
             <ComposedChart
                 data={data}
-                title="Visitantes por Semana"
+                title="Votos por Semana"
                 margin={{ top: 15, right: 25, left: -15, bottom: 5 }}
             >
                 <defs>
