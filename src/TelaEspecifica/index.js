@@ -1,17 +1,20 @@
-import '../App.css'; 
-import Header from '../header';
-import { TurmaProvider } from '../context/TurmaContext';
+import "../App.css";
+import Header from "../header";
+import { TurmaProvider } from "../context/TurmaContext";
 import styles from "./Index.module.css";
-import RegistroVotos from "../components/ListRegistroVotos"
-
+import RegistroVotos from "../components/ListRegistroVotos";
+import DashInternoTela from "../dashInternoTela";
 function TelaEspecifica() {
   return (
     <TurmaProvider>
       <div>
         <Header />
-            <div className={styles.telaContainer}>
-                <RegistroVotos />
-            </div>
+        <div>
+          <DashInternoTela />
+        </div>
+        <div className={styles.telaContainer}>
+          <RegistroVotos />
+        </div>
       </div>
     </TurmaProvider>
   );
