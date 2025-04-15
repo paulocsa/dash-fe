@@ -55,9 +55,11 @@ export default function DashInternoMain() {
       </div>
 
       {/* Fora da div vermelha, abaixo normalmente */}
+      <>
       <div className={styles.cardContent}>
         <VtInternaCards />
       </div>
+      </>
     </>
   );
 }

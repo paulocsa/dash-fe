@@ -9,6 +9,13 @@
     width: 100%;
     z-index: 33;
     position: relative;
+    overflow: visible;
+
+  }
+
+  .carouselShifted {
+    transform: translateY(40px); /* Ajuste conforme necessário */
+    transition: transform 0.3s ease;
   }
 
   .card {
@@ -16,6 +23,7 @@
     border-radius: 8px;
     max-width: 95%;
     transition: all 0.3s ease-in-out;
+    
   }
   
   .card:hover {
@@ -108,7 +116,7 @@
     left: 0;
     width: 100%;
     background-color: white; /* ou transparent se preferir */
-    padding: 24px 70px 5px 70px;
+    padding: 50px 70px 5px 70px;
     z-index: 10;
   }
   .hrWrapper {
@@ -185,3 +193,120 @@
     font-size: 1.5rem;
     color: #1A6C7C
   }
+
+  .cardExtraContentWrapper {
+    position: relative;
+    z-index: 2; /* Coloca essa camada acima do fundo vermelho */
+    background-color: #fff; /* Se quiser fundo branco */
+    padding: 20px; /* Ajuste o padding conforme necessário */
+    border-radius: 10px; /* Para arredondar as bordas, caso queira */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
+  }
+
+  @media screen and (max-width: 768px) {
+  .cardContainer {
+    padding: 2px;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+  .cardHeader {
+    font-size: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .positionBadge {
+    width: 30px;
+    height: 28px;
+    font-size: 14px;
+    top: 0;
+    left: 0;
+  }
+
+  .totalVotes {
+    font-size: 20px;
+  }
+
+  .votosText {
+    font-size: 13px;
+  }
+
+  .cardExtraContentGlobal {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px 10px 20px;
+    text-align: center;
+    background-color: #fff;
+  }
+
+  .nomedocurso {
+    font-size: 1.2rem;
+  }
+
+  .alunosCor {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .peopleIcon {
+    width: 16px;
+  }
+
+  .hrWrapper {
+    padding: 0.2rem 0;
+  }
+
+  .cardAlunos {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .representanteCard {
+    padding: 30px 0;
+  }
+
+  .representanteFoto {
+    width: 90%;
+    height: auto;
+    max-width: 220px;
+  }
+
+  .candidato {
+    position: relative;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .carouselShifted {
+    transform: translateY(20px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .totalVotes {
+    font-size: 18px;
+  }
+
+  .votosText {
+    font-size: 12px;
+  }
+
+  .cardHeader {
+    font-size: 12px;
+  }
+
+  .positionBadge {
+    font-size: 12px;
+  }
+
+  .nomedocurso {
+    font-size: 1rem;
+  }
+
+  .candidato {
+    font-size: 1rem;
+  }
+}

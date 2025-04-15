@@ -143,6 +143,7 @@ const VtInternaCards = () => {
           }}
           numVisible={4}
           numScroll={2}
+          className={styles.carouselShifted} // <-- Classe aplicada aqui
         />
       </div>
 
@@ -167,7 +168,7 @@ const VtInternaCards = () => {
           </div>
           <div className={styles.cardContentAlunos}>
             <div className={styles.cardAlunos}>
-            <h2 className={styles.candidato}>Candidatos a representantes</h2>
+              <h2 className={styles.candidato}>Candidatos a representantes</h2>
               {selectedCard.representantes?.map((rep, index) => (
                 <div className={styles.representanteCard} key={index}>
                   <img
@@ -176,7 +177,7 @@ const VtInternaCards = () => {
                     className={styles.representanteFoto}
                   />
                   <div className={styles.representanteInfo}>
-                    <strong>{rep.name}</strong>  {/* Corrigido para rep.name */}
+                    <strong>{rep.name}</strong> {/* Corrigido para rep.name */}
                   </div>
                 </div>
               ))}
