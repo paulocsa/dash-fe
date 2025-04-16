@@ -18,6 +18,7 @@
     justify-content: space-around;
     gap: 26px;
     width: 100%;
+    padding: 40px 0px;
   }
 
   @media (max-width: 768px) {

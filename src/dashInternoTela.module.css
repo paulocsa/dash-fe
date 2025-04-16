@@ -36,10 +36,8 @@
         z-index: 2;
         position: relative;
         background-color: #B20000;
+        background-size: 100px;
     }
-
-
-
 
     .cursoSelector {
         width: 30%;
