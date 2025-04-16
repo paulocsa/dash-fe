@@ -3,30 +3,30 @@ import styles from "./ListRegistroVotos.module.css";
 import { IoChevronForward, IoChevronBackOutline } from "react-icons/io5";
 
 const dados = [
-  { nome: "João", idade: 25, cidade: "São Paulo" },
-  { nome: "Maria", idade: 30, cidade: "Curitiba" },
-  { nome: "Lucas", idade: 22, cidade: "Belo Horizonte" },
-  { nome: "Ana", idade: 28, cidade: "Rio de Janeiro" },
-  { nome: "Carlos", idade: 31, cidade: "Salvador" },
-  { nome: "Laura", idade: 24, cidade: "Porto Alegre" },
-  { nome: "Pedro", idade: 29, cidade: "Recife" },
-  { nome: "Bruna", idade: 26, cidade: "Florianópolis" },
-  { nome: "Rafael", idade: 27, cidade: "Fortaleza" },
-  { nome: "Isabela", idade: 23, cidade: "Manaus" },
-  { nome: "Thiago", idade: 32, cidade: "Natal" },
-  { nome: "Juliana", idade: 21, cidade: "Vitória" },
-  { nome: "Felipe", idade: 26, cidade: "João Pessoa" },
-  { nome: "Camila", idade: 28, cidade: "Campo Grande" },
-  { nome: "Eduardo", idade: 33, cidade: "Belém" },
-  { nome: "Aline", idade: 25, cidade: "São Luís" },
-  { nome: "Bruno", idade: 27, cidade: "Teresina" },
-  { nome: "Fernanda", idade: 29, cidade: "Aracaju" },
-  { nome: "Igor", idade: 24, cidade: "Maceió" },
-  { nome: "Tatiane", idade: 30, cidade: "Palmas" },
-  { nome: "Vinícius", idade: 31, cidade: "Cuiabá" },
-  { nome: "Natália", idade: 22, cidade: "Boa Vista" },
-  { nome: "Gustavo", idade: 28, cidade: "Porto Velho" },
-  { nome: "Patrícia", idade: 26, cidade: "Macapá" },
+  { nome: "João", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Maria", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Lucas", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Ana", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Carlos", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Laura", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Pedro", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Bruna", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Rafael", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Isabela", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Thiago", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Juliana", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Felipe", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Camila", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Eduardo", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Aline", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Bruno", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Fernanda", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Igor", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Tatiane", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Vinícius", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Natália", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Gustavo", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
+  { nome: "Patrícia", idade: "Votou no candidato 1", cidade: "50 minutos atrás" },
 ];
 
 function RegistroVotos() {
@@ -80,16 +80,16 @@ function RegistroVotos() {
             </thead>
             <tbody>
               {dadosPagina.map((item, index) => (
-                <tr key={index} className={corLinha(index)}>
-                  <td>{item.nome}</td>
-                  <td>{item.idade}</td>
-                  <td className={styles.data}>{item.cidade}</td>
-                </tr>
+              <tr key={index} className={corLinha(index)}>
+                <td data-label="Aluno">{item.nome}</td>
+                <td data-label="Atividade">{item.idade}</td>
+                <td data-label="Data" className={styles.data}>{item.cidade}</td>
+              </tr>
               ))}
             </tbody>
           </table>
           <div className={styles.containerPaginacao}>
-            <div>Total de {totalRegistros} registros</div>
+            <div className={styles.esconderMobile}>Total de {totalRegistros} registros</div>
             <div className={styles.paginacao}>
               <div className={styles.containerSeta}>
               {paginaAtual > 1 && (

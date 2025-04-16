@@ -1,10 +1,29 @@
-.telaContainer {
+.telaContainer{
+  padding: 78px;
+  background-color: #FAFAFA;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+.listContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background-color: #FAFAFA;
-    padding: 78px
   }
 
-  
+  .chartContainer{
+    display: flex;
+    justify-content: space-around;
+    gap: 26px;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .chartContainer {
+      flex-direction: column;
+      width: 100%;
+    }
+
+}
