@@ -4,6 +4,19 @@ import { PieChart, Pie, Cell } from "recharts";
 import styles from "./VtInternaCards.module.css";
 import { TurmaContext } from "../../context/TurmaContext";
 
+import ChartSemanal from '../ChartSemanal';
+import ChartDonut from '../ChartDonut';
+import ChartBar from '../ChartBar';
+import ContainerChart from '../ContainerChart';
+import RegistroVotos from "../../components/ListRegistroVotos";
+
+
+
+const chartData = [
+  { name: "Votos Confirmados", value: 50 },
+  { name: "Não Votaram", value: 50 },
+];
+
 const COLORS = ["#ff0000", "#000000"];
 
 const renderCustomLabel = ({
@@ -60,8 +73,6 @@ const VtInternaCards = () => {
 
   const carouselRef = useRef(null);
 
-
-  
   const getSortedData = () => {
     if (selectedCurso === "todos") {
       const allTurmas = [];
@@ -201,6 +212,19 @@ const VtInternaCards = () => {
               ))}
             </div>
           </div>
+
+          <div className={styles.chartContainer}>
+            <ContainerChart props={<ChartBar />} />
+            <ContainerChart
+              props={
+                <ChartDonut title="Quantidade de Votos" data={chartData} />
+              }
+            />
+            <ContainerChart props={<ChartSemanal />} />
+          </div>
+          <div className={styles.listContainer}>
+          <RegistroVotos />
+        </div>
         </>
       )}
     </>

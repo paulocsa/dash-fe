@@ -24,14 +24,14 @@ function TelaEspecifica() {
           <DashInternoTela />
         </div>
         <div className={styles. telaContainer}>
-        <div className={styles.chartContainer}>
+        {/* <div className={styles.chartContainer}>
           <ContainerChart props={<ChartBar/>}/>
           <ContainerChart props={<ChartDonut title="Quantidade de Votos" data={chartData} />}/>
           <ContainerChart props={<ChartSemanal/>}/>
         </div>
         <div className={styles.listContainer}>
           <RegistroVotos />
-        </div>
+        </div> */}
         </div>
       </div>
     </TurmaProvider>
