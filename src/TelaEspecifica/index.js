@@ -7,8 +7,15 @@ import DashInternoTela from "../dashInternoTela";
 import ContainerChart from "../components/ContainerChart/index"
 import ChartSemanal from "../components/ChartSemanal/index"
 import ChartBar from "../components/ChartBar";
+import ChartDonut from "../components/ChartDonut"
 
 function TelaEspecifica() {
+
+  const chartData = [
+    { name: "Votos Confirmados", value: 50 },
+    { name: "Não Votaram", value: 50 },
+  ];
+
   return (
     <TurmaProvider>
       <div>
@@ -19,7 +26,7 @@ function TelaEspecifica() {
         <div className={styles. telaContainer}>
         <div className={styles.chartContainer}>
           <ContainerChart props={<ChartBar/>}/>
-          <ContainerChart props={<ChartSemanal/>}/>
+          <ContainerChart props={<ChartDonut title="Quantidade de Votos" data={chartData} />}/>
           <ContainerChart props={<ChartSemanal/>}/>
         </div>
         <div className={styles.listContainer}>
