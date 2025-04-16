@@ -49,9 +49,11 @@
   }
   
   .cardInnerContent {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
     align-items: center;
-    justify-content: space-around;
+    justify-items: center;
   }
   
   .totalVotes {
@@ -159,13 +161,13 @@
   }
 
   .cardAlunos {
-    display: flex;
-    flex-wrap: wrap; /* permite múltiplas linhas, se necessário */
-    justify-content: center;
-    gap: 0; /* remove o espaçamento entre os itens */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
     background-color: #fff;
-    padding: 0; /* remove padding */
     width: 100%;
+    justify-items: center;
+        padding: 80px 70px 5px 70px;
   }
 
   .representanteFoto {
@@ -175,25 +177,33 @@
     display: block;
   }
   .cardContentAlunos{
-    display: flex;
-    justify-self: center
+    width: 100%;
+    background-color: #fff;
   }
 
-  .representanteCard {
-    margin: 0;
-    padding: 90px 0;
-  }
+.representanteCard {
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
   
   .representanteInfo {
     margin-top: 8px;
     text-align: center;
   }
-  .candidato{
+  .candidato {
     position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 1.5rem;
-    color: #1A6C7C
+    color: #1A6C7C;
+    margin-bottom: 30px;
+    text-align: center;
+    z-index: 5;
   }
-
+  
   .cardExtraContentWrapper {
     position: relative;
     z-index: 2; /* Coloca essa camada acima do fundo vermelho */
@@ -265,13 +275,13 @@
   }
 
   .representanteCard {
-    padding: 30px 0;
+    padding: 10px 0;
   }
 
   .representanteFoto {
-    width: 90%;
+    width: 110%;
     height: auto;
-    max-width: 220px;
+    max-width: 300px;
   }
 
   .candidato {

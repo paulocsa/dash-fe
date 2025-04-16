@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Carousel } from "primereact/carousel";
 import { PieChart, Pie, Cell } from "recharts";
 import styles from "./VtInternaCards.module.css";
 import { TurmaContext } from "../../context/TurmaContext";
 
-// Importando o ícone de pessoas
 const COLORS = ["#ff0000", "#000000"];
 
 const renderCustomLabel = ({
@@ -59,6 +58,10 @@ const VtInternaCards = () => {
   const { turmaData, selectedCurso, selectedCard, setSelectedCard } =
     useContext(TurmaContext);
 
+  const carouselRef = useRef(null);
+
+
+  
   const getSortedData = () => {
     if (selectedCurso === "todos") {
       const allTurmas = [];
@@ -75,10 +78,26 @@ const VtInternaCards = () => {
 
   const sortedData = getSortedData();
 
+  // 👇 Corrigindo problema do Carousel invisível após redimensionamento
+  useEffect(() => {
+    const handleResize = () => {
+      if (carouselRef.current && carouselRef.current.element) {
+        // força re-renderização com timeout
+        setTimeout(() => {
+          carouselRef.current.element.dispatchEvent(new Event("resize"));
+        }, 100);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <div className={styles.cardContainer}>
         <Carousel
+          ref={carouselRef} // 👈 Importante!
           showIndicators={false}
           value={sortedData}
           responsiveOptions={responsiveOptions}
@@ -143,11 +162,10 @@ const VtInternaCards = () => {
           }}
           numVisible={4}
           numScroll={2}
-          className={styles.carouselShifted} // <-- Classe aplicada aqui
+          className={styles.carouselShifted}
         />
       </div>
 
-      {/* Área de detalhes, fora da div do card */}
       {selectedCard && (
         <>
           <div className={styles.cardExtraContentGlobal}>
@@ -167,8 +185,8 @@ const VtInternaCards = () => {
             <hr className={styles.hrSeparador} />
           </div>
           <div className={styles.cardContentAlunos}>
+            <h2 className={styles.candidato}>Candidatos a representantes</h2>
             <div className={styles.cardAlunos}>
-              <h2 className={styles.candidato}>Candidatos a representantes</h2>
               {selectedCard.representantes?.map((rep, index) => (
                 <div className={styles.representanteCard} key={index}>
                   <img
@@ -177,7 +195,7 @@ const VtInternaCards = () => {
                     className={styles.representanteFoto}
                   />
                   <div className={styles.representanteInfo}>
-                    <strong>{rep.name}</strong> {/* Corrigido para rep.name */}
+                    <strong>{rep.name}</strong>
                   </div>
                 </div>
               ))}
