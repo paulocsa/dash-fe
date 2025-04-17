@@ -1,185 +1,183 @@
 .cardContainer {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    padding: 4px;
-    height: fit-content;
-    overflow-x: auto;
-    width: 100%;
-    z-index: 33;
-    position: relative;
-    overflow: visible;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  padding: 4px;
+  height: fit-content;
+  overflow-x: auto;
+  width: 100%;
+  z-index: 33;
+  position: relative;
+  overflow: visible;
+}
 
-  }
+.carouselShifted {
+  transform: translateY(40px); /* Ajuste conforme necessário */
+  transition: transform 0.3s ease;
+}
 
-  .carouselShifted {
-    transform: translateY(40px); /* Ajuste conforme necessário */
-    transition: transform 0.3s ease;
-  }
+.card {
+  height: fit-content;
+  border-radius: 8px;
+  max-width: 95%;
+  transition: all 0.3s ease-in-out;
+}
 
-  .card {
-    height: fit-content;
-    border-radius: 8px;
-    max-width: 95%;
-    transition: all 0.3s ease-in-out;
-    
-  }
-  
-  .card:hover {
-    transform: scale(1.01);
-    cursor: pointer;
-  }
-  
-  .cardContent {
-    height: fit-content;
-    background-color: #f8f8f8;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #f8f6f6;
-  }
-  
-  .cardHeader {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .cardInnerContent {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    align-items: center;
-    justify-items: center;
-  }
-  
-  .totalVotes {
-    font-size: clamp(16px, 3vw, 30px);
-    font-weight: bold;
-    color: #000;
-    margin: 0px;
-  }
-  
-  .pieChartContainer {
-    width: 100px;
-    height: 100px;
-    position: relative;
-    cursor: pointer;
-  }
-  
-  .positionBadge {
-    top: -10px;
-    left: -10px;
-    background-color: #ad0101;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 7px;
-    width: 35px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-  
-  .classID {
-    text-align: center;
-    width: 100%;
-  }
-  
-  .selected {
-    position: relative;
-  }
-  
-  .selected::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 5px;
-    width: 100%;
-    background-color: red;
-    border-radius: 0 0 8px 8px;
-    transition: all 0.3s ease-in-out;
-  }
-  .nomedocurso{
-    font-size: 1.5rem;
-    color: #1A6C7C
-  }
-  .cardExtraContentGlobal {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    top: 100%; /* aparece abaixo da área principal */
-    left: 0;
-    width: 100%;
-    background-color: white; /* ou transparent se preferir */
-    padding: 50px 70px 5px 70px;
-    z-index: 10;
-  }
-  .hrWrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: white; /* ou transparente, se preferir */
-    padding: 0.5rem 0;
-  }
-  
-  .hrSeparador {
-    width: 90%;
-    border: none;
-    border-top: 1px solid #ccc; /* cor neutra */
-  }
-  .alunosCor{
-    padding: 10px;
-    background-color: #ad0101;
-    color: white;
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    font-weight: bold;
-  }
-  .peopleIcon{
-    width: 20px;
-  }
-  .votacaoInfoText {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .votosText {
-    font-size: 15px;
-    font-weight: 500;
-  }
+.card:hover {
+  transform: scale(1.01);
+  cursor: pointer;
+}
 
-  .cardAlunos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    background-color: #fff;
-    width: 100%;
-    justify-items: center;
-        padding: 80px 70px 5px 70px;
-  }
+.cardContent {
+  height: fit-content;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f8f6f6;
+}
 
-  .representanteFoto {
-    width: 250px; /* ou maior, como preferir */
-    height: 300px;
-    object-fit: cover;
-    display: block;
-  }
-  .cardContentAlunos{
-    width: 100%;
-    background-color: #fff;
-  }
+.cardHeader {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.cardInnerContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+  justify-items: center;
+}
+
+.totalVotes {
+  font-size: clamp(16px, 3vw, 30px);
+  font-weight: bold;
+  color: #000;
+  margin: 0px;
+}
+
+.pieChartContainer {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  cursor: pointer;
+}
+
+.positionBadge {
+  top: -10px;
+  left: -10px;
+  background-color: #ad0101;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 7px;
+  width: 35px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.classID {
+  text-align: center;
+  width: 100%;
+}
+
+.selected {
+  position: relative;
+}
+
+.selected::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background-color: red;
+  border-radius: 0 0 8px 8px;
+  transition: all 0.3s ease-in-out;
+}
+.nomedocurso {
+  font-size: 1.5rem;
+  color: #1a6c7c;
+}
+.cardExtraContentGlobal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  top: 100%; /* aparece abaixo da área principal */
+  left: 0;
+  width: 100%;
+  background-color: white; /* ou transparent se preferir */
+  padding: 50px 70px 5px 70px;
+  z-index: 10;
+}
+.hrWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: white; /* ou transparente, se preferir */
+  padding: 0.5rem 0;
+}
+
+.hrSeparador {
+  width: 90%;
+  border: none;
+  border-top: 1px solid #ccc; /* cor neutra */
+}
+.alunosCor {
+  padding: 10px;
+  background-color: #ad0101;
+  color: white;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: bold;
+}
+.peopleIcon {
+  width: 20px;
+}
+.votacaoInfoText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.votosText {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.cardAlunos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  background-color: #fff;
+  width: 100%;
+  justify-items: center;
+  padding: 80px 70px 5px 70px;
+}
+
+.representanteFoto {
+  width: 250px; /* ou maior, como preferir */
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+.cardContentAlunos {
+  width: 100%;
+  background-color: #fff;
+}
 
 .representanteCard {
   width: 100%;
@@ -188,68 +186,71 @@
   flex-direction: column;
   align-items: center;
 }
-  
-  .representanteInfo {
-    margin-top: 8px;
-    text-align: center;
-  }
-  .candidato {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.5rem;
-    color: #1A6C7C;
-    margin-bottom: 30px;
-    text-align: center;
-    z-index: 5;
-  }
-  
-  .cardExtraContentWrapper {
-    position: relative;
-    z-index: 2; /* Coloca essa camada acima do fundo vermelho */
-    background-color: #fff; /* Se quiser fundo branco */
-    padding: 20px; /* Ajuste o padding conforme necessário */
-    border-radius: 10px; /* Para arredondar as bordas, caso queira */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
-  }
 
+.representanteInfo {
+  margin-top: 8px;
+  text-align: center;
+}
+.candidato {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: #1a6c7c;
+  margin-bottom: 30px;
+  text-align: center;
+  z-index: 5;
+}
 
-  .telaContainer{
-    padding: 90px;
-    background-color: #FAFAFA;
-    display: flex;
+.cardExtraContentWrapper {
+  position: relative;
+  z-index: 2; /* Coloca essa camada acima do fundo vermelho */
+  background-color: #fff; /* Se quiser fundo branco */
+  padding: 20px; /* Ajuste o padding conforme necessário */
+  border-radius: 10px; /* Para arredondar as bordas, caso queira */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
+}
+
+.telaContainer {
+  width: 100%;
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+.listContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Adicionando padding para espaçamento */
+  gap: 10px; /* Para ajustar o espaçamento entre os itens */
+  background: #fff;
+}
+.chartContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 26px;
+  width: 100%;
+}
+.chartContainer > * {
+  flex: 1;
+  min-width: 0; /* permite encolher */
+}
+.registro {
+  width: 80%;
+  background-color: #ffffff;
+}
+.charts{
+  padding: 25px;
+}
+@media (max-width: 768px) {
+  .chartContainer {
     flex-direction: column;
-    gap: 52px;
-  }
-  
-  .listContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 100%;
-    padding: 20px; /* Adicionando padding para espaçamento */
-    gap: 10px; /* Para ajustar o espaçamento entre os itens */
-    background: #fff;
   }
-    .chartContainer {
-      display: flex;
-      justify-content: space-around;
-      gap: 26px;
-      width: 100%;
-      padding: 20px; /* Ajustar o espaçamento interno */
-      background-color: #fff;
-    }
-  
-    @media (max-width: 768px) {
-      .chartContainer {
-        flex-direction: column;
-        width: 100%;
-      }
-  
-  }
+}
 
-  
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .cardContainer {
     padding: 2px;
   }
@@ -320,7 +321,7 @@
     max-width: 300px;
   }
 
-  .candidato {
+  .candidato {  
     position: relative;
     font-size: 1.2rem;
     margin-bottom: 1rem;
