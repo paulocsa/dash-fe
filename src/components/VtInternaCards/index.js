@@ -3,19 +3,6 @@ import { Carousel } from "primereact/carousel";
 import { PieChart, Pie, Cell } from "recharts";
 import styles from "./VtInternaCards.module.css";
 import { TurmaContext } from "../../context/TurmaContext";
-import TelaEspecifica from "../../TelaEspecifica";
-import Charts from "../../charts";
-import RegistroVotos from "../../components/ListRegistroVotos";
-// import ChartSemanal from '../ChartSemanal';
-// import ChartDonut from '../ChartDonut';
-// import ChartBar from '../ChartBar';
-// import ContainerChart from '../ContainerChart';
-// import RegistroVotos from "../../components/ListRegistroVotos";
-
-// const chartData = [
-//   { name: "Votos Confirmados", value: 50 },
-//   { name: "Não Votaram", value: 50 },
-// ];
 
 const COLORS = ["#ff0000", "#000000"];
 
@@ -67,7 +54,7 @@ const responsiveOptions = [
   { breakpoint: "575px", numVisible: 1, numScroll: 1 },
 ];
 
-const VtInternaCards = () => {
+const VtInternaCards = ({ conteudo }) => {
   const { turmaData, selectedCurso, selectedCard, setSelectedCard } =
     useContext(TurmaContext);
 
@@ -211,17 +198,9 @@ const VtInternaCards = () => {
                 </div>
               ))}
             </div>
+            <hr className={styles.hrSeparador} />
           </div>
-          <div className={styles.telaContainer}>
-            <div className={styles.charts}>
-              <Charts />
-            </div>
-          </div>
-          <div className={styles.listContainer}>
-            <div className={styles.registro}>
-              <RegistroVotos />
-            </div>
-          </div>
+          <div className={styles.telaContainer}>{conteudo}</div>
         </>
       )}
     </>

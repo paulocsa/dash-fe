@@ -41,7 +41,7 @@ function RegistroVotos() {
   const totalRegistros = itensPorPagina * totalPaginas;
 
   const marcaPagina = (index) => {
-    if (index == paginaAtual){
+    if (index === paginaAtual){
       return styles.paginaAtual
     }else{
       return styles.nada
@@ -66,7 +66,7 @@ function RegistroVotos() {
 
   return (
     <div className={styles.container}>
-      <div className={styles. containerLista}>
+      <div className={styles.containerLista}>
       <h2 className={styles.tabelaTitulo}>Registro de Votos</h2>
       <div>
         <div>

@@ -165,7 +165,7 @@
   background-color: #fff;
   width: 100%;
   justify-items: center;
-  padding: 80px 70px 5px 70px;
+  padding: 80px 70px 40px 70px;
 }
 
 .representanteFoto {
@@ -217,6 +217,7 @@
   display: flex;
   flex-direction: column;
   gap: 52px;
+  padding: 0 70px 70px 70px;;
 }
 
 .listContainer {
@@ -226,23 +227,28 @@
   gap: 10px; /* Para ajustar o espaçamento entre os itens */
   background: #fff;
 }
+
 .chartContainer {
   display: flex;
   justify-content: space-between;
   gap: 26px;
   width: 100%;
 }
+
 .chartContainer > * {
   flex: 1;
   min-width: 0; /* permite encolher */
 }
+
 .registro {
   width: 80%;
   background-color: #ffffff;
 }
+
 .charts{
   padding: 25px;
 }
+
 @media (max-width: 768px) {
   .chartContainer {
     flex-direction: column;
