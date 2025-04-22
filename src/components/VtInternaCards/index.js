@@ -4,61 +4,18 @@ import { PieChart, Pie, Cell } from "recharts";
 import styles from "./VtInternaCards.module.css";
 import { TurmaContext } from "../../context/TurmaContext";
 
-const COLORS = ["#ff0000", "#000000"];
-
-const renderCustomLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-  index,
-  name,
-}) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const RADIAN = Math.PI / 180;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <>
-      <text
-        x={x}
-        y={y}
-        fill="black"
-        textAnchor={x > cx ? "start" : "end"}
-        dominantBaseline={y > cy ? "hanging" : "baseline"}
-        style={{ fontSize: "12px" }}
-      >
-        {`${name}`}
-      </text>
-      <text
-        x={x}
-        y={y + 15}
-        fill="black"
-        textAnchor={x > cx ? "start" : "end"}
-        dominantBaseline={y > cy ? "hanging" : "baseline"}
-        style={{ fontSize: "10px" }}
-      >
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
-    </>
-  );
-};
-
-const responsiveOptions = [
-  { breakpoint: "1400px", numVisible: 4, numScroll: 1 },
-  { breakpoint: "1199px", numVisible: 3, numScroll: 1 },
-  { breakpoint: "767px", numVisible: 2, numScroll: 1 },
-  { breakpoint: "575px", numVisible: 1, numScroll: 1 },
-];
-
 const VtInternaCards = ({ conteudo }) => {
   const { turmaData, selectedCurso, selectedCard, setSelectedCard } =
     useContext(TurmaContext);
 
   const carouselRef = useRef(null);
+
+  const responsiveOptions = [
+    { breakpoint: "1400px", numVisible: 4, numScroll: 1 },
+    { breakpoint: "1199px", numVisible: 3, numScroll: 1 },
+    { breakpoint: "767px", numVisible: 2, numScroll: 1 },
+    { breakpoint: "575px", numVisible: 1, numScroll: 1 },
+  ];
 
   const getSortedData = () => {
     if (selectedCurso === "todos") {
@@ -74,7 +31,62 @@ const VtInternaCards = ({ conteudo }) => {
     return [];
   };
 
+  const getTotals = () => {
+    if (selectedCurso === "todos") {
+      const dsmData = turmaData.dsm || [];
+      const gestaoData = turmaData.gestao || [];
+
+      const totalAlunos = dsmData.reduce((sum, turma) => sum + turma.totalAlunos, 0) +
+                         gestaoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
+
+      const votosValidos = dsmData.reduce((sum, turma) => sum + turma.votosValidos, 0) +
+                          gestaoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
+
+      const candidatosAtivos = dsmData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0) +
+                              gestaoData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0);
+
+      const votosPendentes = totalAlunos - votosValidos;
+
+      return {
+        totalAlunos,
+        votosValidos,
+        votosPendentes,
+        candidatosAtivos
+      };
+    } else {
+      const cursoData = turmaData[selectedCurso] || [];
+      
+      const totalAlunos = cursoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
+      const votosValidos = cursoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
+      const candidatosAtivos = cursoData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0);
+      const votosPendentes = totalAlunos - votosValidos;
+
+      return {
+        totalAlunos,
+        votosValidos,
+        votosPendentes,
+        candidatosAtivos
+      };
+    }
+  };
+
+  const totals = getTotals();
   const sortedData = getSortedData();
+
+  const COLORS = ["#00C49F", "#FFBB28"];
+
+  const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central">
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
 
   // 👇 Corrigindo problema do Carousel invisível após redimensionamento
   useEffect(() => {

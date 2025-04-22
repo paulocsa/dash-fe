@@ -1,3 +1,43 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.card p {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
+
 .cardContainer {
   display: flex;
   flex-direction: column;
@@ -13,7 +53,7 @@
 }
 
 .carouselShifted {
-  transform: translateY(40px); /* Ajuste conforme necessário */
+  transform: translateY(40px);
   transition: transform 0.3s ease;
 }
 
@@ -112,10 +152,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  top: 100%; /* aparece abaixo da área principal */
+  top: 100%;
   left: 0;
   width: 100%;
-  background-color: white; /* ou transparent se preferir */
+  background-color: white;
   padding: 50px 70px 5px 70px;
   z-index: 10;
 }
@@ -123,14 +163,14 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: white; /* ou transparente, se preferir */
+  background-color: white;
   padding: 0.5rem 0;
 }
 
 .hrSeparador {
   width: 90%;
   border: none;
-  border-top: 1px solid #ccc; /* cor neutra */
+  border-top: 1px solid #ccc;
 }
 .alunosCor {
   padding: 10px;
@@ -169,7 +209,7 @@
 }
 
 .representanteFoto {
-  width: 250px; /* ou maior, como preferir */
+  width: 250px;
   height: 300px;
   object-fit: cover;
   display: block;
@@ -204,11 +244,11 @@
 
 .cardExtraContentWrapper {
   position: relative;
-  z-index: 2; /* Coloca essa camada acima do fundo vermelho */
-  background-color: #fff; /* Se quiser fundo branco */
-  padding: 20px; /* Ajuste o padding conforme necessário */
-  border-radius: 10px; /* Para arredondar as bordas, caso queira */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
+  z-index: 2;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .telaContainer {
@@ -217,14 +257,14 @@
   display: flex;
   flex-direction: column;
   gap: 52px;
-  padding: 0 70px 70px 70px;;
+  padding: 0 70px 70px 70px;
 }
 
 .listContainer {
   display: flex;
   justify-content: center;
-  align-items: center; /* Adicionando padding para espaçamento */
-  gap: 10px; /* Para ajustar o espaçamento entre os itens */
+  align-items: center;
+  gap: 10px;
   background: #fff;
 }
 
@@ -237,7 +277,7 @@
 
 .chartContainer > * {
   flex: 1;
-  min-width: 0; /* permite encolher */
+  min-width: 0;
 }
 
 .registro {
