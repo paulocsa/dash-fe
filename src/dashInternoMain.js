@@ -10,6 +10,7 @@ import { TurmaContext } from "./context/TurmaContext";
 
 export default function DashInternoMain() {
   const { selectedCurso, selectedVotacaoType, curso, votacaoType, setSelectedCurso, setSelectedVotacaoType } = useContext(TurmaContext);
+
   return (
     <div className={styles.dashContainer}>
       <div className={styles.dashHeader}>
