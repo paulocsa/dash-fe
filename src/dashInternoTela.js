@@ -7,7 +7,7 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import { TurmaContext } from "./context/TurmaContext";
 import ContainerChart from "./components/ContainerChart";
-import ChartBar from "./components/ChartBar";
+import ChartBar from "./components/ChartPie";
 import ChartDonut from "./components/ChartDonut";
 import ChartSemanal from "./components/ChartSemanal";
 
