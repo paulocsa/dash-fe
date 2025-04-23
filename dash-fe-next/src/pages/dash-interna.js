@@ -2,7 +2,6 @@
 import React from "react";
 import Head from "next/head";
 import DashInternoMain from "@/components/DashInternoMain";
-import Layout from "@/layout/Layout";
 
 export default function DashInterna() {
   return (
