@@ -12,7 +12,7 @@
     justify-content: center;
     padding: 0 30px;
     font-family: 'Roboto Slab', sans-serif;
-    background: linear-gradient(to bottom, #B20000 33%, white 33%);
+    background: linear-gradient(to bottom, #B20000 25%, white 25%);
 }
 
 .dashHeader {
@@ -25,11 +25,32 @@
     padding: 0 20px;
 }
 
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.cursoSelector {
+    width: 30%;
+    max-width: 150px;
+    height: 50%;
+    border: none;
+    border-radius: 4px;
+    background-color: #EFEFEF;
+    font-family: 'Roboto Slab', sans-serif;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+}
+
 .chartContainers {
     width: 100%;
     display: flex;
     flex-direction: row;
-    height: 50vh;
     justify-content: space-between;
     margin-top: 15px;
 }
@@ -39,7 +60,6 @@
     margin-bottom: 15px;
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
-    height: 100%;
     padding: 10px;
     background: white;
 }
@@ -51,6 +71,11 @@
         padding: 0 10px;
     }
 
+    .cardContent {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .chartContainers {
         flex-direction: column;
     }
@@ -59,14 +84,11 @@
         width: 100%;
     }
 
-    .dashContainer {
-        background: linear-gradient(to bottom, #B20000 70%, white 70%);
+    .cursoSelector{
+        width: 100%;
     }
-}
 
-
-.containerTeste{
-    width: 100px;
-    height: 100px;
-    background-color: blue;
+    .dashContainer{
+        background: linear-gradient(to bottom, #B20000 40%, white 40%);
+    }
 }
