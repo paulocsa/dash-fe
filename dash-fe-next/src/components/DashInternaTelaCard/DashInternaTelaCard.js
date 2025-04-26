@@ -3,15 +3,15 @@
 import { useContext } from "react";
 import VtInternaCards from "../VtInternaCards/VInternaCards";
 import RegistroVotos from "../ListaRegistroVotos/ListaRegistroVotos";
-import styles from "./DashInternoCard.module.css";
+import styles from "./DashInternaTelaCard.module.css";
 import { Dropdown } from "primereact/dropdown";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
-import { TurmaContext } from "./context/TurmaContext"; //TurmaContext??
+import { TurmaContext } from "../../context/TurmaContext";
 import ContainerChart from "../ContainerChart/ContainerChart";
-import ChartBar from "../components/ChartPie"; //ChartPie???
 import ChartDonut from "../ChartDonut/ChartDonut";
-import ChartSemanal from "../components/ChartSemanal"; //ChartSemanal??
+import ChartPie from "../ChartPie";
+import ChartSemanal from "../ChartSemanal";
 
 export default function DashInternoCard() {
   const {
@@ -74,16 +74,15 @@ export default function DashInternoCard() {
               <div>
                 <h2 className={styles.titleChart}>Overview</h2>
                 <div className={styles.chartContainer}>
-                  <ContainerChart props={<ChartBar />} />
-                  <ContainerChart
-                    props={
-                      <ChartDonut
-                        title="Quantidade de Votos"
-                        data={chartData}
-                      />
-                    }
-                  />
-                  <ContainerChart props={<ChartSemanal />} />
+                  <ContainerChart>
+                    <ChartPie />
+                  </ContainerChart>
+                  <ContainerChart>
+                    <ChartDonut title="Quantidade de Votos" data={chartData} />
+                  </ContainerChart>
+                  <ContainerChart>
+                    <ChartSemanal />
+                  </ContainerChart>
                 </div>
                 <div className={styles.listContainer}>
                   <RegistroVotos />

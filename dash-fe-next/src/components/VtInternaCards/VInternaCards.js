@@ -7,7 +7,7 @@ import styles from "./VtInternaCards.module.css";
 import { TurmaContext } from "../../context/TurmaContext";
 
 const VtInternaCards = ({ conteudo }) => {
-  const { turmaData, selectedCurso, selectedCard, setSelectedCard } =
+  const { turmaDataVotos, selectedCurso, selectedCard, setSelectedCard } =
     useContext(TurmaContext);
 
   const carouselRef = useRef(null);
@@ -22,21 +22,21 @@ const VtInternaCards = ({ conteudo }) => {
   const getSortedData = () => {
     if (selectedCurso === "todos") {
       const allTurmas = [];
-      if (turmaData.dsm)
-        turmaData.dsm.forEach((t) => allTurmas.push({ ...t, curso: "DSM" }));
-      if (turmaData.gestao)
-        turmaData.gestao.forEach((t) => allTurmas.push({ ...t, curso: "GE" }));
+      if (turmaDataVotos.dsm)
+        turmaDataVotos.dsm.forEach((t) => allTurmas.push({ ...t, curso: "DSM" }));
+      if (turmaDataVotos.gestao)
+        turmaDataVotos.gestao.forEach((t) => allTurmas.push({ ...t, curso: "GE" }));
       return allTurmas.sort((a, b) => b.votos - a.votos);
-    } else if (selectedCurso && turmaData[selectedCurso]) {
-      return [...turmaData[selectedCurso]].sort((a, b) => b.votos - a.votos);
+    } else if (selectedCurso && turmaDataVotos[selectedCurso]) {
+      return [...turmaDataVotos[selectedCurso]].sort((a, b) => b.votos - a.votos);
     }
     return [];
   };
 
   const getTotals = () => {
     if (selectedCurso === "todos") {
-      const dsmData = turmaData.dsm || [];
-      const gestaoData = turmaData.gestao || [];
+      const dsmData = turmaDataVotos.dsm || [];
+      const gestaoData = turmaDataVotos.gestao || [];
 
       const totalAlunos = dsmData.reduce((sum, turma) => sum + turma.totalAlunos, 0) +
                          gestaoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
@@ -56,7 +56,7 @@ const VtInternaCards = ({ conteudo }) => {
         candidatosAtivos
       };
     } else {
-      const cursoData = turmaData[selectedCurso] || [];
+      const cursoData = turmaDataVotos[selectedCurso] || [];
       
       const totalAlunos = cursoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
       const votosValidos = cursoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
