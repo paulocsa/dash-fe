@@ -2,7 +2,6 @@
 import React, { useContext } from "react";
 import styles from "./DashInternoMain.module.css";
 import { Dropdown } from "primereact/dropdown";
-import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import ChartSemanal from "../ChartSemanal";
 import ChartPie from "../ChartPie";
@@ -21,7 +20,7 @@ const DashInternoMain = () => {
           options={votacaoType}
           optionLabel="name"
           placeholder="Votação"
-          className="custom-dropdown" 
+          className={styles.votacaoSelector}
         />
         <Dropdown
           value={selectedCurso}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./ListRegistroVotos.module.css";
+import styles from "./ListaRegistroVotos.module.css";
 import { IoChevronForward, IoChevronBackOutline } from "react-icons/io5";
 
 const dados = [

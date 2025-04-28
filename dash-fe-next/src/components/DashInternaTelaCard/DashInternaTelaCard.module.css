@@ -4,6 +4,7 @@
   font-weight: 500;
   font-style: normal;
 }
+
 .dashContainer {
   display: flex;
   flex-direction: column;
