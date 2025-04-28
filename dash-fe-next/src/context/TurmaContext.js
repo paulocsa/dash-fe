@@ -221,6 +221,7 @@ const dataweek = {
 export const TurmaProvider = ({ children }) => {
   const [selectedCurso, setSelectedCurso] = useState("dsm");
   const [selectedVotacaoType, setSelectedVotacaoType] = useState(0);
+  const [selectedCard, setSelectedCard] = useState(null);  // Adiciona o estado selectedCard
 
   return (
     <TurmaContext.Provider
@@ -229,6 +230,8 @@ export const TurmaProvider = ({ children }) => {
         setSelectedCurso,
         selectedVotacaoType,
         setSelectedVotacaoType,
+        selectedCard,       // Passa selectedCard
+        setSelectedCard,    // Passa setSelectedCard
         turmaData,
         turmaDataVotos,
         curso,
