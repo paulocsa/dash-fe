@@ -2,14 +2,19 @@
 
 import React, { useContext, useEffect, useRef } from "react";
 import { Carousel } from "primereact/carousel";
-import { PieChart, Pie, Cell } from "recharts";
+import dynamic from "next/dynamic"; // 👈 IMPORTANTE: dynamic import do next
 import styles from "./VtInternaCards.module.css";
 import { TurmaContext } from "../../context/TurmaContext";
+import { useIsClient } from "../../hooks/useIsClient";
+
+// Fazendo import dinâmico apenas no client para o Recharts
+const PieChart = dynamic(() => import('recharts').then((mod) => mod.PieChart), { ssr: false });
+const Pie = dynamic(() => import('recharts').then((mod) => mod.Pie), { ssr: false });
+const Cell = dynamic(() => import('recharts').then((mod) => mod.Cell), { ssr: false });
 
 const VtInternaCards = ({ conteudo }) => {
-  const { turmaDataVotos, selectedCurso, selectedCard, setSelectedCard } =
-    useContext(TurmaContext);
-
+  const { turmaDataVotos, selectedCurso, selectedCard, setSelectedCard } = useContext(TurmaContext);
+  const isClient = useIsClient(); // 👈 aqui!
   const carouselRef = useRef(null);
 
   const responsiveOptions = [
@@ -39,13 +44,13 @@ const VtInternaCards = ({ conteudo }) => {
       const gestaoData = turmaDataVotos.gestao || [];
 
       const totalAlunos = dsmData.reduce((sum, turma) => sum + turma.totalAlunos, 0) +
-                         gestaoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
+        gestaoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
 
       const votosValidos = dsmData.reduce((sum, turma) => sum + turma.votosValidos, 0) +
-                          gestaoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
+        gestaoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
 
       const candidatosAtivos = dsmData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0) +
-                              gestaoData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0);
+        gestaoData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0);
 
       const votosPendentes = totalAlunos - votosValidos;
 
@@ -57,7 +62,7 @@ const VtInternaCards = ({ conteudo }) => {
       };
     } else {
       const cursoData = turmaDataVotos[selectedCurso] || [];
-      
+
       const totalAlunos = cursoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
       const votosValidos = cursoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
       const candidatosAtivos = cursoData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0);
@@ -90,11 +95,9 @@ const VtInternaCards = ({ conteudo }) => {
     );
   };
 
-  // 👇 Corrigindo problema do Carousel invisível após redimensionamento
   useEffect(() => {
     const handleResize = () => {
       if (carouselRef.current && carouselRef.current.element) {
-        // força re-renderização com timeout
         setTimeout(() => {
           carouselRef.current.element.dispatchEvent(new Event("resize"));
         }, 100);
@@ -109,7 +112,7 @@ const VtInternaCards = ({ conteudo }) => {
     <>
       <div className={styles.cardContainer}>
         <Carousel
-          ref={carouselRef} // 👈 Importante!
+          ref={carouselRef}
           showIndicators={false}
           value={sortedData}
           responsiveOptions={responsiveOptions}
@@ -121,9 +124,8 @@ const VtInternaCards = ({ conteudo }) => {
 
             return (
               <div
-                className={`${styles.card} ${
-                  selectedCard?.name === item.name ? styles.selected : ""
-                }`}
+                className={`${styles.card} ${selectedCard?.name === item.name ? styles.selected : ""
+                  }`}
                 onClick={() =>
                   setSelectedCard(
                     selectedCard?.name === item.name ? null : item
@@ -145,28 +147,32 @@ const VtInternaCards = ({ conteudo }) => {
                       <span className={styles.votosText}>Votos</span>
                     </div>
                     <div className={styles.pieChartContainer}>
-                      <PieChart
-                        width={150}
-                        height={100}
-                        margin={{ top: 0, right: 25, bottom: 10, left: 0 }}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <Pie
-                          data={[
-                            { name: "Ótimo", value: item.feedback.otimo },
-                            { name: "Bom", value: item.feedback.bom },
-                          ]}
-                          label={renderCustomLabel}
-                          labelLine={false}
-                          dataKey="value"
-                          innerRadius="65%"
-                          outerRadius="75%"
-                        >
-                          <Cell fill={COLORS[0]} />
-                          <Cell fill={COLORS[1]} />
-                        </Pie>
-                      </PieChart>
+                      {item?.feedback ? (
+                        isClient ? ( // 👈 só monta o PieChart se já estamos no client!
+                          <PieChart width={150} height={100}>
+                            <Pie
+                              data={[
+                                { name: "Ótimo", value: item.feedback.otimo || 0 },
+                                { name: "Bom", value: item.feedback.bom || 0 },
+                              ]}
+                              dataKey="value"
+                              innerRadius="65%"
+                              outerRadius="75%"
+                              labelLine={false}
+                              label={renderCustomLabel}
+                            >
+                              <Cell fill="#00C49F" />
+                              <Cell fill="#FFBB28" />
+                            </Pie>
+                          </PieChart>
+                        ) : (
+                          <div style={{ width: 150, height: 100 }}>Carregando...</div>
+                        )
+                      ) : (
+                        <div>No Feedback Available</div>
+                      )}
                     </div>
+
                   </div>
                 </div>
               </div>

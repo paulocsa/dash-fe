@@ -38,28 +38,54 @@
     font-weight: bold;
   }
 
-  .navContent{
+  .navContent {
     display: flex;
-    justify-content: flex-start;
-  }
-  .navContainer {
-    display: flex;
-    width: 100%;
-    height: 100px;
-    background-color: #B20000;
     align-items: center;
-    justify-content: space-between;
-  }
-  .profile{
-    padding: 10px;
+    width: auto; /* libera para crescer */
   }
 
-  .profilePic{
-    width: 37%;
+  .logoWrapper {
+    position: relative;
+    width: 200px; /* ou o tamanho que quiser */
+    height: 100px; /* ou o tamanho que quiser */
   }
-.logoMenu{
-  margin-top:10px;
-}
+  .navContent ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  .navContent li {
+    margin-right: 20px;
+  }
+
+  
+  .navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #B20000;
+    padding: 10px 20px;
+    height: 80px;
+    width: 100%;
+  }
+  .profile {
+    display: flex;
+    align-items: center;
+    padding: 50px;
+  }
+
+  .profilePic {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+  .logoMenu {
+    max-width: 150px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
   .rightSection {
     display: flex;
     align-items: center;
@@ -142,12 +168,13 @@
       display: flex;
       justify-content: flex-end; /* Alinha à direita */
       padding: 5px;
-      width: 50%;
+      width: 30%;
     }
     
     .profilePic {
-      width: 40%;
-      /* Margem opcional para afastar mais da borda */
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
       margin-right: 20px;
     }
     .logoMenu{

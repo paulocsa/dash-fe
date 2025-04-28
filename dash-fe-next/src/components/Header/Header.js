@@ -123,16 +123,19 @@ export default function Header() {
         <nav className={styles.navContent}>
           <ul>
             <li>
-              <Image
-                src="/logo_menu.png"
-                alt="Logo Menu"
-                width={100}
-                height={40}
-                className={styles.logoMenu}
-              />
+              <div className={styles.logoWrapper}>
+                <Image
+                  src="/logo_menu.png"
+                  alt="Logo Menu"
+                  fill
+                  className={styles.logoMenu}
+                />
+              </div>
+
             </li>
           </ul>
         </nav>
+
         <div className={styles.profile}>
           <Image
             src="/profile.png"
@@ -143,6 +146,7 @@ export default function Header() {
           />
         </div>
       </div>
+
     </>
   );
 }
