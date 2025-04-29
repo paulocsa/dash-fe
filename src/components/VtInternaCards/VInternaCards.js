@@ -1,19 +1,20 @@
-"use client";
-
 import React, { useContext, useEffect, useRef } from "react";
 import { Carousel } from "primereact/carousel";
-import dynamic from "next/dynamic"; // 👈 IMPORTANTE: dynamic import do next
+import dynamic from "next/dynamic";
 import styles from "./VtInternaCards.module.css";
 import { TurmaContext } from "../../context/TurmaContext";
 import { useIsClient } from "../../hooks/useIsClient";
 import { PieChart, Pie, Cell } from "recharts";
 
-// Fazendo import dinâmico apenas no client para o Recharts
-
 const VtInternaCards = ({ conteudo }) => {
-  const { turmaDataVotos, selectedCurso, selectedCard, setSelectedCard } = useContext(TurmaContext);
-  const isClient = useIsClient(); // 👈 aqui!
+  const { turmaDataVotos, selectedCurso, selectedCard, setSelectedCard, setSelectedCurso } = useContext(TurmaContext);
+  const isClient = useIsClient();
   const carouselRef = useRef(null);
+
+  // Garantir que o curso DSM seja selecionado inicialmente
+  useEffect(() => {
+    setSelectedCurso("dsm");
+  }, [setSelectedCurso]);
 
   const responsiveOptions = [
     { breakpoint: "1400px", numVisible: 4, numScroll: 1 },
@@ -115,22 +116,12 @@ const VtInternaCards = ({ conteudo }) => {
           value={sortedData}
           responsiveOptions={responsiveOptions}
           itemTemplate={(item, index) => {
-            const sortedIndex =
-              sortedData.findIndex(
-                (sortedItem) => sortedItem.name === item.name
-              ) + 1;
+            const sortedIndex = sortedData.findIndex((sortedItem) => sortedItem.name === item.name) + 1;
 
             return (
               <div
-                className={`${styles.card} ${selectedCard?.name === item.name ? styles.selected : ""
-                  }`}
-                onClick={() =>
-                {
-                  setSelectedCard(
-                    selectedCard?.name === item.name ? null : item
-                  )
-                }
-                }
+                className={`${styles.card} ${selectedCard?.name === item.name ? styles.selected : ""}`}
+                onClick={() => setSelectedCard(selectedCard?.name === item.name ? null : item)}
               >
                 <div className={styles.cardContent}>
                   <div className={styles.cardHeader}>
@@ -148,8 +139,8 @@ const VtInternaCards = ({ conteudo }) => {
                     </div>
                     <div className={styles.pieChartContainer}>
                       {item?.feedback ? (
-                        isClient ? ( // 👈 só monta o PieChart se já estamos no client!
-                          <PieChart width={150} height={100} style={{zIndex: 5000}}>
+                        isClient ? (
+                          <PieChart width={150} height={100} style={{ zIndex: 5000 }}>
                             <Pie
                               data={[
                                 { name: "Ótimo", value: item.feedback.otimo || 0 },
@@ -172,7 +163,6 @@ const VtInternaCards = ({ conteudo }) => {
                         <div>No Feedback Available</div>
                       )}
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -223,14 +213,13 @@ const VtInternaCards = ({ conteudo }) => {
           <div className={styles.telaContainer}>{conteudo}</div>
         </>
       )}
+
       {!selectedCard && (
-        <>
-          <div className={styles.cardExtraContentGlobal}>
-            <h3 className={styles.nomesemcurso}>
-              SELECIONE UMA TURMA
-            </h3>
-          </div>
-        </>
+        <div className={styles.cardExtraContentGlobal}>
+          <h3 className={styles.nomesemcurso}>
+            SELECIONE UMA TURMA
+          </h3>
+        </div>
       )}
     </>
   );
