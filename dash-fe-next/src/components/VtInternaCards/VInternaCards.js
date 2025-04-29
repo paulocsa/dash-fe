@@ -6,11 +6,9 @@ import dynamic from "next/dynamic"; // 👈 IMPORTANTE: dynamic import do next
 import styles from "./VtInternaCards.module.css";
 import { TurmaContext } from "../../context/TurmaContext";
 import { useIsClient } from "../../hooks/useIsClient";
+import { PieChart, Pie, Cell } from "recharts";
 
 // Fazendo import dinâmico apenas no client para o Recharts
-const PieChart = dynamic(() => import('recharts').then((mod) => mod.PieChart), { ssr: false });
-const Pie = dynamic(() => import('recharts').then((mod) => mod.Pie), { ssr: false });
-const Cell = dynamic(() => import('recharts').then((mod) => mod.Cell), { ssr: false });
 
 const VtInternaCards = ({ conteudo }) => {
   const { turmaDataVotos, selectedCurso, selectedCard, setSelectedCard } = useContext(TurmaContext);
@@ -127,9 +125,11 @@ const VtInternaCards = ({ conteudo }) => {
                 className={`${styles.card} ${selectedCard?.name === item.name ? styles.selected : ""
                   }`}
                 onClick={() =>
+                {
                   setSelectedCard(
                     selectedCard?.name === item.name ? null : item
                   )
+                }
                 }
               >
                 <div className={styles.cardContent}>
@@ -149,7 +149,7 @@ const VtInternaCards = ({ conteudo }) => {
                     <div className={styles.pieChartContainer}>
                       {item?.feedback ? (
                         isClient ? ( // 👈 só monta o PieChart se já estamos no client!
-                          <PieChart width={150} height={100}>
+                          <PieChart width={150} height={100} style={{zIndex: 5000}}>
                             <Pie
                               data={[
                                 { name: "Ótimo", value: item.feedback.otimo || 0 },
@@ -221,6 +221,15 @@ const VtInternaCards = ({ conteudo }) => {
             <hr className={styles.hrSeparador} />
           </div>
           <div className={styles.telaContainer}>{conteudo}</div>
+        </>
+      )}
+      {!selectedCard && (
+        <>
+          <div className={styles.cardExtraContentGlobal}>
+            <h3 className={styles.nomesemcurso}>
+              SELECIONE UMA TURMA
+            </h3>
+          </div>
         </>
       )}
     </>

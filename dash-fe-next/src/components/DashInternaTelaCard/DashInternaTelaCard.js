@@ -10,7 +10,7 @@ import "primereact/resources/primereact.min.css";
 import { TurmaContext } from "../../context/TurmaContext";
 import ContainerChart from "../ContainerChart/ContainerChart";
 import ChartDonut from "../ChartDonut/ChartDonut";
-import ChartPie from "../ChartPie";
+import ChartBar from "../ChartBar/ChartBar";
 import ChartSemanal from "../ChartSemanal";
 
 export default function DashInternoCard() {
@@ -75,7 +75,7 @@ export default function DashInternoCard() {
                 <h2 className={styles.titleChart}>Overview</h2>
                 <div className={styles.chartContainer}>
                   <ContainerChart>
-                    <ChartPie />
+                    <ChartBar />
                   </ContainerChart>
                   <ContainerChart>
                     <ChartDonut title="Quantidade de Votos" data={chartData} />

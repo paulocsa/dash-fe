@@ -3,10 +3,10 @@
 import styles from "./ContainerChart.module.css";
 
 
-function ContainerChart({props}) {
+function ContainerChart({children}) {
     return(
         <div className={styles.containerChart}>
-                {props}
+                {children}
         </div>
     );
 }

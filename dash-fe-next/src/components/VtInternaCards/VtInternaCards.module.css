@@ -150,6 +150,14 @@
   font-size: 1.5rem;
   color: #1a6c7c;
 }
+
+.nomesemcurso {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 20px;
+  width: 100%;
+  color: #1a6c7c;
+}
 .cardExtraContentGlobal {
   display: flex;
   align-items: center;

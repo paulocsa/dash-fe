@@ -24,7 +24,7 @@ const CustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, inde
 
 const DonutChart = ({ title, data }) => {
   return (
-    <div style={{ width: "100%", height: 300 }}>
+    <div style={{ width: "100%", height: "100%" }}>
       <h3 className={styles.title}>{title}</h3>
       <ResponsiveContainer>
         <PieChart>
