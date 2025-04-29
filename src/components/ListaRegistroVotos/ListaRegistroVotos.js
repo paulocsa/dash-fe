@@ -76,7 +76,6 @@ function RegistroVotos() {
             <thead>
               <tr className={styles.tabelaSubTitulo}>
                 <th>Aluno</th>
-                <th>Atividade</th>
                 <th>Data</th>
               </tr>
             </thead>
@@ -84,7 +83,6 @@ function RegistroVotos() {
               {dadosPagina.map((item, index) => (
               <tr key={index} className={corLinha(index)}>
                 <td data-label="Aluno">{item.nome}</td>
-                <td data-label="Atividade">{item.idade}</td>
                 <td data-label="Data" className={styles.data}>{item.cidade}</td>
               </tr>
               ))}

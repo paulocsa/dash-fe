@@ -27,7 +27,7 @@ const DashInternoMain = () => {
           onChange={(e) => setSelectedCurso(e.value)}
           options={curso}
           optionLabel="name"
-          placeholder="CURSO"
+          placeholder="Selecione um curso"
           className={styles.cursoSelector}
         />
       </div>

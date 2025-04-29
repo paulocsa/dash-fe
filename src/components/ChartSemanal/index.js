@@ -1,7 +1,6 @@
 'use client';
 import React, { useContext } from "react";
 import {
-    Line,
     Area,
     XAxis,
     YAxis,
@@ -22,29 +21,24 @@ const ChartSemanal = () => {
         if (selectedCurso === "todos") {
             return daysOfWeek.map((day, index) => {
                 const dsmWeek1Data = dataweek.dsm?.week1[index];
-                const dsmWeek2Data = dataweek.dsm?.week2[index];
                 const gestaoWeek1Data = dataweek.gestao?.week1[index];
-                const gestaoWeek2Data = dataweek.gestao?.week2[index];
 
                 return {
                     day,
                     week1: (dsmWeek1Data?.visitantes || 0) + (gestaoWeek1Data?.visitantes || 0),
-                    week2: (dsmWeek2Data?.visitantes || 0) + (gestaoWeek2Data?.visitantes || 0),
                 };
             });
         } else {
             const cursoData = selectedCurso && dataweek[selectedCurso] 
                 ? dataweek[selectedCurso] 
-                : { week1: [], week2: [] };
+                : { week1: [] };
 
             return daysOfWeek.map((day, index) => {
                 const week1Data = cursoData.week1[index];
-                const week2Data = cursoData.week2[index];
 
                 return {
                     day,
                     week1: week1Data ? week1Data.visitantes : 0,
-                    week2: week2Data ? week2Data.visitantes : 0,
                 };
             });
         }
@@ -54,12 +48,12 @@ const ChartSemanal = () => {
 
     return (
         <div className={styles.chartContainer}>
-            <span className={styles.title}>Votos por Semana</span>
+            <span className={styles.title}>Votos - Semana 1</span>
             <div style={{ width: '100%', height: 300 }}>
                 <ResponsiveContainer>
                     <ComposedChart
                         data={data}
-                        margin={{left: -20 }}
+                        margin={{ left: -20 }}
                     >
                         <defs>
                             <linearGradient id="colorWeek1" x1="0" y1="0" x2="0" y2="1">
@@ -97,14 +91,6 @@ const ChartSemanal = () => {
                             name="Semana 1"
                             dot={false}
                         />
-                        <Line
-                            type="monotone"
-                            dataKey="week2"
-                            stroke="#A2A2A2"
-                            name="Semana 2"
-                            strokeDasharray="5 5"
-                            dot={false}
-                        />
                     </ComposedChart>
                 </ResponsiveContainer>
             </div>
@@ -112,4 +98,4 @@ const ChartSemanal = () => {
     );
 };
 
-export default ChartSemanal; 
+export default ChartSemanal;

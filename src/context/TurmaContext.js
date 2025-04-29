@@ -219,7 +219,7 @@ const dataweek = {
 };
 
 export const TurmaProvider = ({ children }) => {
-  const [selectedCurso, setSelectedCurso] = useState("dsm");
+  const [selectedCurso, setSelectedCurso] = useState("null");
   const [selectedVotacaoType, setSelectedVotacaoType] = useState(0);
   const [selectedCard, setSelectedCard] = useState('');  // Adiciona o estado selectedCard
 
