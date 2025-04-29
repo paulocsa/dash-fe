@@ -1,3 +1,4 @@
+'use client';
 import { useContext } from "react";
 import React from "react";
 import {
@@ -9,7 +10,7 @@ import {
     Legend,
 } from "recharts";
 import { TurmaContext } from "../../context/TurmaContext"
-import styles from "../ChartSemanal/ChartSemanal.module.css"
+import styles from "./ChartPie.module.css"
 
 const COLORS = ["#d32f2f", "#252525"];
 
@@ -101,4 +102,4 @@ const ChartPie = () => {
     );
 };
 
-export default ChartPie;
+export default ChartPie; 

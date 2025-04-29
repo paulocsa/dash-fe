@@ -1,7 +1,15 @@
-.title {
-    font-size: 15px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    color: #1A6C7C;
+.chartContainer {
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
+
+.title {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 20px;
+} 

@@ -1,3 +1,4 @@
+'use client';
 import React, { useContext } from "react";
 import {
     Line,
@@ -9,7 +10,7 @@ import {
     ResponsiveContainer,
     ComposedChart,
 } from "recharts";
-import { TurmaContext } from "../../context/TurmaContext";
+import { TurmaContext } from "@/context/TurmaContext";
 import styles from "./ChartSemanal.module.css";
 
 const daysOfWeek = ["seg.", "ter.", "qua.", "qui.", "sex.", "sáb.", "dom."];
@@ -52,60 +53,63 @@ const ChartSemanal = () => {
     const data = getData();
 
     return (
-        <ResponsiveContainer width="100%" height="100%">
+        <div className={styles.chartContainer}>
             <span className={styles.title}>Votos por Semana</span>
-            <ComposedChart
-                data={data}
-                title="Votos por Semana"
-                margin={{ top: 15, right: 25, left: -15, bottom: 5 }}
-            >
-                <defs>
-                    <linearGradient id="colorWeek1" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#B20000" stopOpacity={0.1} />
-                        <stop offset="95%" stopColor="#B20000" stopOpacity={0.0} />
-                    </linearGradient>
-                </defs>
-                <XAxis
-                    dataKey="day"
-                    style={{ fontSize: "12px" }}
-                    axisLine={false}
-                    tickLine={false}
-                />
-                <YAxis
-                    style={{ fontSize: "12px" }}
-                    axisLine={false}
-                    tickLine={false}
-                />
-                <Tooltip />
-                <Legend
-                    wrapperStyle={{
-                        fontSize: "12px",
-                        top: 0,
-                        left: 0,
-                        lineHeight: "15px",
-                    }}
-                    iconType="circle"
-                    iconSize={10}
-                />
-                <Area
-                    type="monotone"
-                    dataKey="week1"
-                    stroke="#B20000"
-                    fill="url(#colorWeek1)"
-                    name="Semana 1"
-                    dot={false}
-                />
-                <Line
-                    type="monotone"
-                    dataKey="week2"
-                    stroke="#A2A2A2"
-                    name="Semana 2"
-                    strokeDasharray="5 5"
-                    dot={false}
-                />
-            </ComposedChart>
-        </ResponsiveContainer>
+            <div style={{ width: '100%', height: 300 }}>
+                <ResponsiveContainer>
+                    <ComposedChart
+                        data={data}
+                        margin={{left: -20 }}
+                    >
+                        <defs>
+                            <linearGradient id="colorWeek1" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#B20000" stopOpacity={0.1} />
+                                <stop offset="95%" stopColor="#B20000" stopOpacity={0.0} />
+                            </linearGradient>
+                        </defs>
+                        <XAxis
+                            dataKey="day"
+                            style={{ fontSize: "12px" }}
+                            axisLine={false}
+                            tickLine={false}
+                        />
+                        <YAxis
+                            style={{ fontSize: "12px" }}
+                            axisLine={false}
+                            tickLine={false}
+                        />
+                        <Tooltip />
+                        <Legend
+                            wrapperStyle={{
+                                fontSize: "12px",
+                                top: 0,
+                                left: 0,
+                                lineHeight: "15px",
+                            }}
+                            iconType="circle"
+                            iconSize={10}
+                        />
+                        <Area
+                            type="monotone"
+                            dataKey="week1"
+                            stroke="#B20000"
+                            fill="url(#colorWeek1)"
+                            name="Semana 1"
+                            dot={false}
+                        />
+                        <Line
+                            type="monotone"
+                            dataKey="week2"
+                            stroke="#A2A2A2"
+                            name="Semana 2"
+                            strokeDasharray="5 5"
+                            dot={false}
+                        />
+                    </ComposedChart>
+                </ResponsiveContainer>
+            </div>
+        </div>
     );
 };
 
-export default ChartSemanal;
+export default ChartSemanal; 
