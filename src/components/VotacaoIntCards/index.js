@@ -1,76 +1,76 @@
 'use client';
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./VotacaoIntCards.module.css";
-import { TurmaContext } from "../../context/TurmaContext";
 import Image from 'next/image';
+import axios from "axios";
 
-const VotacaoInternaCards = () => {
-  const { turmaData, selectedCurso } = useContext(TurmaContext);
+const VotacaoInternaCards = ({ cursoSelecionado }) => {
+  const [dadosTurmas, setDadosTurmas] = useState([]);
 
-  const getTotals = () => {
-    if (selectedCurso === "todos") {
-      const dsmData = turmaData.dsm || [];
-      const gestaoData = turmaData.gestao || [];
-
-      const totalAlunos = dsmData.reduce((sum, turma) => sum + turma.totalAlunos, 0) +
-                         gestaoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
-
-      const votosValidos = dsmData.reduce((sum, turma) => sum + turma.votosValidos, 0) +
-                          gestaoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
-
-      const candidatosAtivos = dsmData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0) +
-                              gestaoData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0);
-
-      const votosPendentes = totalAlunos - votosValidos;
-
-      return {
-        totalAlunos,
-        votosValidos,
-        votosPendentes,
-        candidatosAtivos
-      };
-    } else {
-      const cursoData = turmaData[selectedCurso] || [];
-      
-      const totalAlunos = cursoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
-      const votosValidos = cursoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
-      const candidatosAtivos = cursoData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0);
-      const votosPendentes = totalAlunos - votosValidos;
-
-      return {
-        totalAlunos,
-        votosValidos,
-        votosPendentes,
-        candidatosAtivos
-      };
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get('http://localhost:5000/v1/dashboard/interno/ativo');
+        setDadosTurmas(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar dados dos cards:", error);
+      }
     }
-  };
 
-  const totals = getTotals();
+    fetchData();
+  }, []);
+
+  const getTotais = () => {
+    const cursoFiltro = cursoSelecionado.toLowerCase();
+  
+    const filtrado = dadosTurmas.filter((turma) => {
+      const curso = turma.curso_semestre.toLowerCase();
+  
+      if (cursoFiltro === "todos") return true;
+      if (cursoFiltro === "dsm") return curso.includes("dsm");
+      if (cursoFiltro.includes("gestão")) return curso.includes("ge") || curso.includes("gestão");
+  
+      return false;
+    });
+  
+    const totalAlunos = filtrado.reduce((sum, turma) => sum + parseInt(turma.total_alunos, 10), 0);
+    const votosValidos = filtrado.reduce((sum, turma) => sum + parseInt(turma.votos_validos, 10), 0);
+    const candidatosAtivos = filtrado.reduce((sum, turma) => sum + parseInt(turma.candidatos_ativos, 10), 0);
+    const votosPendentes = totalAlunos - votosValidos;
+  
+    return {
+      totalAlunos,
+      votosValidos,
+      votosPendentes,
+      candidatosAtivos
+    };
+  };
+  
+  const totais = getTotais();
 
   const cards = [
     {
       name: "Votos Válidos",
-      votos: totals.votosValidos,
+      votos: totais.votosValidos,
       color: "#666666",
       image: "/dash/vote.svg",
       bottomColor: "#d32f2f"
     },
     {
       name: "Votos Pendentes",
-      votos: (totals.totalAlunos - totals.votosValidos),
+      votos: totais.votosPendentes,
       color: "#666666",
       image: "/dash/vote.svg"
     },
     {
       name: "Total de Alunos",
-      votos: totals.totalAlunos,
+      votos: totais.totalAlunos,
       color: "#666666",
       image: "/dash/people.svg"
     },
     {
       name: "Candidatos Ativos",
-      votos: totals.candidatosAtivos,
+      votos: totais.candidatosAtivos,
       color: "#666666",
       image: "/dash/people.svg"
     }
@@ -86,7 +86,9 @@ const VotacaoInternaCards = () => {
             </div>
             <div className={styles.cardInnerContent}>
               <div className={styles.votacaoInfoText}>
-                <p className={styles.totalVotes} style={{ color: item.color }}>{item.votos}</p>
+                <p className={styles.totalVotes} style={{ color: item.color }}>
+                  {item.votos}
+                </p>
                 <Image src={item.image} alt={item.name} width={28} height={28} />
               </div>
             </div>
@@ -103,4 +105,4 @@ const VotacaoInternaCards = () => {
   );
 };
 
-export default VotacaoInternaCards; 
+export default VotacaoInternaCards;

@@ -1,15 +1,26 @@
 'use client';
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import styles from "./DashInternoMain.module.css";
 import { Dropdown } from "primereact/dropdown";
 import "primereact/resources/primereact.min.css";
 import ChartSemanal from "../ChartSemanal";
 import ChartPie from "../ChartPie";
-import { TurmaContext } from "@/context/TurmaContext";
 import VotacaoInternaCards from "../VotacaoIntCards";
 
 const DashInternoMain = () => {
-  const { selectedCurso, selectedVotacaoType, curso, votacaoType, setSelectedCurso, setSelectedVotacaoType } = useContext(TurmaContext);
+  const [selectedCurso, setSelectedCurso] = useState({ name: "Todos" });
+  const [selectedVotacaoType, setSelectedVotacaoType] = useState(null);
+
+  const curso = [
+    { name: "Todos" },
+    { name: "DSM" },
+    { name: "Gestão Empresarial" }
+  ];
+
+  const votacaoType = [
+    { name: "Interna" },
+    { name: "Externa" }
+  ];
 
   return (
     <div className={styles.dashContainer}>
@@ -31,19 +42,21 @@ const DashInternoMain = () => {
           className={styles.cursoSelector}
         />
       </div>
+
       <div className={styles.cardContent}>
-        <VotacaoInternaCards />
+        <VotacaoInternaCards cursoSelecionado={selectedCurso.name} />
       </div>
+
       <div className={styles.chartContainers}>
         <div className={styles.chartContainer}>
           <ChartSemanal />
         </div>
         <div className={styles.chartContainer}>
-          <ChartPie/>
+          <ChartPie />
         </div>
       </div>
     </div>
   );
 };
 
-export default DashInternoMain; 
+export default DashInternoMain;
