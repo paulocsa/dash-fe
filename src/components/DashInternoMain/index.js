@@ -10,7 +10,7 @@ import axios from "axios";
 
 // Função para transformar dados em formato para o gráfico
 const mapDataToWeekDays = (dadosAPI, cursoSelecionado) => {
-  const diasSemana = ["seg.", "ter.", "qua.", "qui.", "sex.", "sáb.", "dom."];
+  const diasSemana = ["dom.", "seg.", "ter.", "qua.", "qui.", "sex.", "sáb."]; // getDay: 0 = dom, 1 = seg, etc.
   const votosPorDia = {};
 
   // Inicializa todos os dias com zero
@@ -18,22 +18,27 @@ const mapDataToWeekDays = (dadosAPI, cursoSelecionado) => {
     votosPorDia[dia] = 0;
   });
 
+  const cursoMap = {
+    "DSM": "DSM",
+    "Gestão Empresarial": "GE"
+  };
+
   const eventosFiltrados = cursoSelecionado === "Todos"
     ? dadosAPI
-    : dadosAPI.filter(evento =>
-        evento.curso_semestre.toLowerCase().includes(cursoSelecionado.toLowerCase())
-      );
-
-      eventosFiltrados.forEach((evento) => {
-        if (Array.isArray(evento.votos_por_dia)) {
-          evento.votos_por_dia.forEach((voto) => {
-            const date = new Date(voto.data);
-            const nomeDia = diasSemana[date.getDay()];
-            votosPorDia[nomeDia] += voto.qtd_votos;
-          });
-        }
+    : dadosAPI.filter((evento) => {
+        const prefix = cursoMap[cursoSelecionado];
+        return evento.curso_semestre.toUpperCase().startsWith(prefix);
       });
-      
+
+  eventosFiltrados.forEach((evento) => {
+    if (Array.isArray(evento.votos_por_dia)) {
+      evento.votos_por_dia.forEach((voto) => {
+        const date = new Date(voto.data);
+        const nomeDia = diasSemana[date.getDay()];
+        votosPorDia[nomeDia] += voto.qtd_votos;
+      });
+    }
+  });
 
   return diasSemana.map((dia) => ({
     day: dia,
@@ -60,7 +65,7 @@ const DashInternoMain = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/v1/dashboard/interno/ativo"); // Substitua pela URL correta
+        const response = await axios.get("http://localhost:5000/v1/dashboard/interno/ativo");
         setDataweek(response.data);
       } catch (error) {
         console.error("Erro ao buscar dados:", error);

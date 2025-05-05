@@ -1,24 +1,21 @@
 'use client';
-import { useContext } from "react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     PieChart,
     Pie,
     Cell,
     ResponsiveContainer,
     Tooltip,
-    Legend,
 } from "recharts";
-import { TurmaContext } from "../../context/TurmaContext"
-import styles from "./ChartPie.module.css"
+import styles from "./ChartPie.module.css";
+import axios from "axios";
 
 const COLORS = ["#d32f2f", "#252525"];
 
 const renderCustomizedLabel = ({ name, percent, index }) => {
     const x = index === 0 ? "30%" : "70%";
-    const y = index === 0 ? "30%" : "70%";
     const textAnchor = index === 0 ? "end" : "start";
-    
+
     return (
         <text
             x={x}
@@ -38,39 +35,44 @@ const renderCustomizedLabel = ({ name, percent, index }) => {
 };
 
 const ChartPie = () => {
-    const { turmaData, selectedCurso } = useContext(TurmaContext);
-    
+    const [turmaData, setTurmaData] = useState([]);
+    const [selectedCurso, setSelectedCurso] = useState("Todos");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:5000/v1/dashboard/interno/ativo");
+                setTurmaData(response.data);
+            } catch (error) {
+                console.error("Erro ao buscar dados da API:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     const getData = () => {
-        if (selectedCurso === "todos") {
-            const dsmData = turmaData.dsm || [];
-            const gestaoData = turmaData.gestao || [];
-            
-            const totalAlunos = dsmData.reduce((sum, turma) => sum + turma.totalAlunos, 0) +
-                              gestaoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
-            
-            const votosValidos = dsmData.reduce((sum, turma) => sum + turma.votosValidos, 0) +
-                               gestaoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
-            
-            const votosPendentes = totalAlunos - votosValidos;
-            
-            return [
-                { name: "Votos Confirmados", value: votosValidos },
-                { name: "Não Votaram", value: votosPendentes }
-            ];
-        } else if (selectedCurso && turmaData[selectedCurso]) {
-            const cursoData = turmaData[selectedCurso];
-            
-            const totalAlunos = cursoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
-            const votosValidos = cursoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
-            const votosPendentes = totalAlunos - votosValidos;
-            
-            return [
-                { name: "Votos Confirmados", value: votosValidos },
-                { name: "Não Votaram", value: votosPendentes }
-            ];
+        if (!turmaData || turmaData.length === 0) return [];
+
+        let eventosFiltrados = turmaData;
+
+        if (selectedCurso && selectedCurso !== "Todos") {
+            const filtro = selectedCurso.toLowerCase().includes("gest")
+                ? "ge"
+                : "dsm";
+            eventosFiltrados = turmaData.filter(evento =>
+                evento.curso_semestre?.toLowerCase().startsWith(filtro)
+            );
         }
-        
-        return [];
+
+        const totalAlunos = eventosFiltrados.reduce((sum, turma) => sum + Number(turma.total_alunos), 0);
+        const votosValidos = eventosFiltrados.reduce((sum, turma) => sum + Number(turma.votos_validos), 0);
+        const votosPendentes = totalAlunos - votosValidos;
+
+        return [
+            { name: "Votos Confirmados", value: votosValidos },
+            { name: "Não Votaram", value: votosPendentes }
+        ];
     };
 
     const data = getData();
@@ -102,4 +104,4 @@ const ChartPie = () => {
     );
 };
 
-export default ChartPie; 
+export default ChartPie;
