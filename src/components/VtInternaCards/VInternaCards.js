@@ -1,18 +1,95 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Carousel } from "primereact/carousel";
 import dynamic from "next/dynamic";
 import styles from "./VtInternaCards.module.css";
 import { TurmaContext } from "../../context/TurmaContext";
 import { useIsClient } from "../../hooks/useIsClient";
 import { PieChart, Pie, Cell } from "recharts";
+import axios from "axios";
 
 const VtInternaCards = ({ conteudo }) => {
-  const { turmaDataVotos, selectedCurso, selectedCard, setSelectedCard, setSelectedCurso } = useContext(TurmaContext);
+  const { selectedCurso, selectedCard, setSelectedCard, setSelectedCurso } = useContext(TurmaContext);
   const isClient = useIsClient();
   const carouselRef = useRef(null);
+  const [eventosAtivos, setEventosAtivos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [turmaDataVotos, setTurmaDataVotos] = useState({ dsm: [], gestao: [] });
 
-  // Garantir que o curso DSM seja selecionado inicialmente
+  // Buscar eventos ativos e dados das turmas
   useEffect(() => {
+    const fetchEventosAtivos = async () => {
+      try {
+        console.log('Iniciando busca de eventos ativos...');
+        const response = await axios.get('http://localhost:5000/v1/dashboard/interno/ativo');
+        console.log('Resposta da API:', response.data);
+        
+        if (!response.data || response.data.length === 0) {
+          console.log('Nenhum evento ativo encontrado');
+          setLoading(false);
+          return;
+        }
+  
+        const eventos = response.data;
+        const dsmData = [];
+        const gestaoData = [];
+        
+        for (const evento of eventos) {
+          console.log('Processando evento:', evento.curso_semestre);
+          
+          const turmaData = {
+            name: evento.curso_semestre,
+            votos: evento.votos_validos,
+            totalAlunos: parseInt(evento.total_alunos),
+            votosValidos: parseInt(evento.votos_validos),
+            votosPendentes: parseInt(evento.votos_pendentes),
+            candidatosAtivos: parseInt(evento.candidatos_ativos),
+            total: parseInt(evento.total_alunos),
+            representantes: [],
+            feedback: {
+              otimo: Math.floor(Math.random() * 100),
+              bom: Math.floor(Math.random() * 100)
+            }
+          };
+          
+          try {
+            console.log(`Buscando candidatos para ${evento.curso_semestre}...`);
+            const candidatosResponse = await axios.get(`http://localhost:5000/v1/dashboard/interno/ativo/curso/${evento.curso_semestre}`);
+            console.log(`Candidatos para ${evento.curso_semestre}:`, candidatosResponse.data);
+            
+            turmaData.representantes = candidatosResponse.data.candidatos.map(c => ({
+              name: c.nome,
+              foto: c.foto_url || '/default-user.png',
+              votos: c.qtd_votos_recebidos
+            }));
+          } catch (error) {
+            console.error(`Erro ao buscar candidatos para ${evento.curso_semestre}:`, error);
+          }
+          
+          if (evento.curso_semestre.includes('DSM')) {
+            dsmData.push(turmaData);
+          } else {
+            gestaoData.push(turmaData);
+          }
+        }
+        
+        console.log('Dados DSM:', dsmData);
+        console.log('Dados Gestão:', gestaoData);
+        
+        setTurmaDataVotos({
+          dsm: dsmData,
+          gestao: gestaoData,
+          todos: [...dsmData, ...gestaoData]
+        });
+        
+        setEventosAtivos(eventos);
+        setLoading(false);
+      } catch (error) {
+        console.error('Erro ao buscar eventos ativos:', error);
+        setLoading(false);
+      }
+    };
+    
+    fetchEventosAtivos();
     setSelectedCurso("dsm");
   }, [setSelectedCurso]);
 
@@ -107,6 +184,10 @@ const VtInternaCards = ({ conteudo }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  if (loading) {
+    return <div className={styles.cardContainer}>Carregando dados...</div>;
+  }
+
   return (
     <>
       <div className={styles.cardContainer}>
@@ -122,6 +203,7 @@ const VtInternaCards = ({ conteudo }) => {
               <div
                 className={`${styles.card} ${selectedCard?.name === item.name ? styles.selected : ""}`}
                 onClick={() => setSelectedCard(selectedCard?.name === item.name ? null : item)}
+                key={item.name}
               >
                 <div className={styles.cardContent}>
                   <div className={styles.cardHeader}>
@@ -204,6 +286,7 @@ const VtInternaCards = ({ conteudo }) => {
                   />
                   <div className={styles.representanteInfo}>
                     <strong>{rep.name}</strong>
+                    <span>Votos: {rep.votos}</span>
                   </div>
                 </div>
               ))}
