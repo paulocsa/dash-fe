@@ -9,7 +9,8 @@ A interface é focada em **visualização de resultados em tempo real**, com ên
 
 O front-end se comunica com o back-end por meio de uma **API REST**, utilizando **Axios** para requisições HTTP e **SSE (Server-Sent Events)** para atualização em tempo real dos dados de votação.
 
-📌 *[Inserir aqui uma imagem da arquitetura do sistema]*
+![image](https://github.com/user-attachments/assets/1d1994e3-193d-452f-9370-e42d401caa03)
+
 
 ---
 
