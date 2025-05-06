@@ -91,7 +91,7 @@ const ChartPie = ({ selectedCurso }) => {
             { name: "Não Votaram", value: votosPendentes || 0 }
         ];
 
-        console.log("Dados para o gráfico:", data); // Depuração
+        console.log("Dados para o gráficos:", data); // Depuração
 
         return data;
     };
