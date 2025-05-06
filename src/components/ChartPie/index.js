@@ -34,54 +34,78 @@ const renderCustomizedLabel = ({ name, percent, index }) => {
     );
 };
 
-const ChartPie = () => {
+const ChartPie = ({ selectedCurso }) => {
     const [turmaData, setTurmaData] = useState([]);
-    const [selectedCurso, setSelectedCurso] = useState("Todos");
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
+            setIsLoading(true);
             try {
                 const response = await axios.get("http://localhost:5000/v1/dashboard/interno/ativo");
+                console.log("Dados recebidos da API:", response.data); // Depuração
                 setTurmaData(response.data);
+                setError(null);
             } catch (error) {
                 console.error("Erro ao buscar dados da API:", error);
+                setError("Falha ao carregar os dados.");
+            } finally {
+                setIsLoading(false);
             }
         };
 
         fetchData();
-    }, []);
+    }, []); // Apenas uma chamada inicial
 
     const getData = () => {
-        if (!turmaData || turmaData.length === 0) return [];
-
-        let eventosFiltrados = turmaData;
-
-        if (selectedCurso && selectedCurso !== "Todos") {
-            const filtro = selectedCurso.toLowerCase().includes("gest")
-                ? "ge"
-                : "dsm";
-            eventosFiltrados = turmaData.filter(evento =>
-                evento.curso_semestre?.toLowerCase().startsWith(filtro)
-            );
+        if (!turmaData || turmaData.length === 0) {
+            console.log("Nenhum dado disponível para processar.");
+            return [
+                { name: "Votos Confirmados", value: 0 },
+                { name: "Não Votaram", value: 0 }
+            ];
         }
 
-        const totalAlunos = eventosFiltrados.reduce((sum, turma) => sum + Number(turma.total_alunos), 0);
-        const votosValidos = eventosFiltrados.reduce((sum, turma) => sum + Number(turma.votos_validos), 0);
+        const cursoFiltro = selectedCurso ? selectedCurso.toLowerCase() : "todos";
+        console.log("Curso selecionado:", cursoFiltro); // Depuração
+
+        const eventosFiltrados = turmaData.filter((turma) => {
+            const curso = turma.curso_semestre?.toLowerCase() || "";
+            if (cursoFiltro === "todos") return true;
+            if (cursoFiltro === "dsm") return curso.includes("dsm");
+            if (cursoFiltro.includes("gestão")) return curso.includes("ge");
+            return false;
+        });
+
+        console.log("Dados filtrados:", eventosFiltrados); // Depuração
+
+        const totalAlunos = eventosFiltrados.reduce((sum, turma) => sum + parseInt(turma.total_alunos || 0, 10), 0);
+        const votosValidos = eventosFiltrados.reduce((sum, turma) => sum + parseInt(turma.votos_validos || 0, 10), 0);
         const votosPendentes = totalAlunos - votosValidos;
 
-        return [
-            { name: "Votos Confirmados", value: votosValidos },
-            { name: "Não Votaram", value: votosPendentes }
+        console.log("Totais calculados:", { totalAlunos, votosValidos, votosPendentes }); // Depuração
+
+        const data = [
+            { name: "Votos Confirmados", value: votosValidos || 0 },
+            { name: "Não Votaram", value: votosPendentes || 0 }
         ];
+
+        console.log("Dados para o gráfico:", data); // Depuração
+
+        return data;
     };
 
     const data = getData();
+
+    if (isLoading) return <div>Carregando...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className={styles.chartContainer}>
             <span className={styles.title}>Quantidade de Votos</span>
             <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
+                <PieChart key={selectedCurso || "default"}> {/* Força re-renderização */}
                     <Pie
                         data={data}
                         cx="50%"
@@ -100,6 +124,9 @@ const ChartPie = () => {
                     <Tooltip formatter={(value) => [`${value} votos`, '']} />
                 </PieChart>
             </ResponsiveContainer>
+            <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                <p>Total: {(data[0]?.value || 0) + (data[1]?.value || 0)} votos</p>
+            </div>
         </div>
     );
 };
