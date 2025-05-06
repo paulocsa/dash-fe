@@ -8,12 +8,11 @@ import ChartPie from "../ChartPie";
 import VotacaoInternaCards from "../VotacaoIntCards";
 import axios from "axios";
 
-// Função para transformar dados em formato para o gráfico
+// Função para transformar dados em formato para o gráfico semanal
 const mapDataToWeekDays = (dadosAPI, cursoSelecionado) => {
-  const diasSemana = ["dom.", "seg.", "ter.", "qua.", "qui.", "sex.", "sáb."]; // getDay: 0 = dom, 1 = seg, etc.
+  const diasSemana = ["dom.", "seg.", "ter.", "qua.", "qui.", "sex.", "sáb."];
   const votosPorDia = {};
 
-  // Inicializa todos os dias com zero
   diasSemana.forEach((dia) => {
     votosPorDia[dia] = 0;
   });
@@ -48,18 +47,12 @@ const mapDataToWeekDays = (dadosAPI, cursoSelecionado) => {
 
 const DashInternoMain = () => {
   const [selectedCurso, setSelectedCurso] = useState({ name: "Todos" });
-  const [selectedVotacaoType, setSelectedVotacaoType] = useState(null);
   const [dataweek, setDataweek] = useState([]);
 
   const curso = [
     { name: "Todos" },
     { name: "DSM" },
     { name: "Gestão Empresarial" }
-  ];
-
-  const votacaoType = [
-    { name: "Interna" },
-    { name: "Externa" }
   ];
 
   useEffect(() => {
@@ -74,19 +67,18 @@ const DashInternoMain = () => {
     fetchData();
   }, []);
 
+  const dataFiltrada = selectedCurso.name === "Todos"
+    ? dataweek
+    : dataweek.filter(evento => {
+        const prefix = selectedCurso.name === "Gestão Empresarial" ? "GE" : "DSM";
+        return evento.curso_semestre.toUpperCase().startsWith(prefix);
+      });
+
   const chartData = mapDataToWeekDays(dataweek, selectedCurso.name);
 
   return (
     <div className={styles.dashContainer}>
       <div className={styles.dashHeader}>
-        <Dropdown
-          value={selectedVotacaoType}
-          onChange={(e) => setSelectedVotacaoType(e.value)}
-          options={votacaoType}
-          optionLabel="name"
-          placeholder="Votação"
-          className={styles.votacaoSelector}
-        />
         <Dropdown
           value={selectedCurso}
           onChange={(e) => setSelectedCurso(e.value)}
@@ -106,7 +98,7 @@ const DashInternoMain = () => {
           <ChartSemanal data={chartData} />
         </div>
         <div className={styles.chartContainer}>
-          <ChartPie />
+          <ChartPie selectedCurso={selectedCurso.name} data={dataFiltrada} />
         </div>
       </div>
     </div>
