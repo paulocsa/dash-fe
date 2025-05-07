@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Carousel } from "primereact/carousel";
-import dynamic from "next/dynamic";
 import styles from "./VtInternaCards.module.css";
 import { TurmaContext } from "../../context/TurmaContext";
 import { useIsClient } from "../../hooks/useIsClient";
@@ -15,27 +14,21 @@ const VtInternaCards = ({ conteudo }) => {
   const [loading, setLoading] = useState(true);
   const [turmaDataVotos, setTurmaDataVotos] = useState({ dsm: [], gestao: [] });
 
-  // Buscar eventos ativos e dados das turmas
   useEffect(() => {
     const fetchEventosAtivos = async () => {
       try {
-        console.log('Iniciando busca de eventos ativos...');
         const response = await axios.get('http://localhost:5000/v1/dashboard/interno/ativo');
-        console.log('Resposta da API:', response.data);
+        const eventos = response.data;
         
-        if (!response.data || response.data.length === 0) {
-          console.log('Nenhum evento ativo encontrado');
+        if (!eventos || eventos.length === 0) {
           setLoading(false);
           return;
         }
-  
-        const eventos = response.data;
+
         const dsmData = [];
         const gestaoData = [];
         
         for (const evento of eventos) {
-          console.log('Processando evento:', evento.curso_semestre);
-          
           const turmaData = {
             name: evento.curso_semestre,
             votos: evento.votos_validos,
@@ -52,14 +45,10 @@ const VtInternaCards = ({ conteudo }) => {
           };
           
           try {
-            console.log(`Buscando candidatos para ${evento.curso_semestre}...`);
             const candidatosResponse = await axios.get(`http://localhost:5000/v1/dashboard/interno/ativo/curso/${evento.curso_semestre}`);
-            console.log(`Candidatos para ${evento.curso_semestre}:`, candidatosResponse.data);
-            
             turmaData.representantes = candidatosResponse.data.candidatos.map(c => ({
               name: c.nome,
-              foto: c.foto_url || '/default-user.png',
-              votos: c.qtd_votos_recebidos
+              foto: c.foto_url || '/default-user.png'
             }));
           } catch (error) {
             console.error(`Erro ao buscar candidatos para ${evento.curso_semestre}:`, error);
@@ -71,9 +60,6 @@ const VtInternaCards = ({ conteudo }) => {
             gestaoData.push(turmaData);
           }
         }
-        
-        console.log('Dados DSM:', dsmData);
-        console.log('Dados Gestão:', gestaoData);
         
         setTurmaDataVotos({
           dsm: dsmData,
@@ -114,48 +100,6 @@ const VtInternaCards = ({ conteudo }) => {
     return [];
   };
 
-  const getTotals = () => {
-    if (selectedCurso === "todos") {
-      const dsmData = turmaDataVotos.dsm || [];
-      const gestaoData = turmaDataVotos.gestao || [];
-
-      const totalAlunos = dsmData.reduce((sum, turma) => sum + turma.totalAlunos, 0) +
-        gestaoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
-
-      const votosValidos = dsmData.reduce((sum, turma) => sum + turma.votosValidos, 0) +
-        gestaoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
-
-      const candidatosAtivos = dsmData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0) +
-        gestaoData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0);
-
-      const votosPendentes = totalAlunos - votosValidos;
-
-      return {
-        totalAlunos,
-        votosValidos,
-        votosPendentes,
-        candidatosAtivos
-      };
-    } else {
-      const cursoData = turmaDataVotos[selectedCurso] || [];
-
-      const totalAlunos = cursoData.reduce((sum, turma) => sum + turma.totalAlunos, 0);
-      const votosValidos = cursoData.reduce((sum, turma) => sum + turma.votosValidos, 0);
-      const candidatosAtivos = cursoData.reduce((sum, turma) => sum + turma.candidatosAtivos, 0);
-      const votosPendentes = totalAlunos - votosValidos;
-
-      return {
-        totalAlunos,
-        votosValidos,
-        votosPendentes,
-        candidatosAtivos
-      };
-    }
-  };
-
-  const totals = getTotals();
-  const sortedData = getSortedData();
-
   const COLORS = ["#00C49F", "#FFBB28"];
 
   const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -187,6 +131,8 @@ const VtInternaCards = ({ conteudo }) => {
   if (loading) {
     return <div className={styles.cardContainer}>Carregando dados...</div>;
   }
+
+  const sortedData = getSortedData();
 
   return (
     <>
@@ -222,7 +168,7 @@ const VtInternaCards = ({ conteudo }) => {
                     <div className={styles.pieChartContainer}>
                       {item?.feedback ? (
                         isClient ? (
-                          <PieChart width={150} height={100} style={{ zIndex: 5000 }}>
+                          <PieChart width={150} height={100}>
                             <Pie
                               data={[
                                 { name: "Ótimo", value: item.feedback.otimo || 0 },
@@ -284,10 +230,7 @@ const VtInternaCards = ({ conteudo }) => {
                     alt={`Foto de ${rep.name}`}
                     className={styles.representanteFoto}
                   />
-                  <div className={styles.representanteInfo}>
-                    <strong>{rep.name}</strong>
-                    <span>Votos: {rep.votos}</span>
-                  </div>
+                  <p className={styles.representanteNome}>{rep.name}</p>
                 </div>
               ))}
             </div>
